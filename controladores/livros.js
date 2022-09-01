@@ -1,21 +1,21 @@
 const { pool } = require("../config");
 const { request, response } = require("express");
-/*
+
 const getLivros = (request, response) => {
-    pool.query("select l.codigo as codigo, l.nome as nome, l.autor as autor,  \///
+    pool.query("select l.codigo as codigo, l.nome as nome, l.autor as autor,  \
     to_char(l.data_lancamento, \'DD-MM-YYYY\') as data_lancamento, \
     l.editora as editora, e.nome as editora_nome \
     from livros l \
     join editoras e on e.codigo = l.editora order by l.codigo", (error, results) => {
         if (error) {
             return response.status(401).json({status: 'error', 
-            message: 'Erro ao recuperar os livros ZZZZZ: ' + error});
+            message: 'Erro ao recuperar os livros: ' + error});
         }
         response.status(200).json(results.rows)
     })
 }
-*/
 
+/*
 const getLivros = (request, response) => {
     pool.query("SELECT * FROM processos", (error, results) => {
         if (error) {
@@ -25,7 +25,7 @@ const getLivros = (request, response) => {
         response.status(200).json(results.rows)
     })
 }
-
+*/
 
 module.exports.getLivros = getLivros;
 
