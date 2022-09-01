@@ -5,7 +5,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 const {Pool} = require('pg')
 
 
-
 const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
 
 //const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`
@@ -13,13 +12,13 @@ const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_P
 //const connectionString = `postgresql://postgres:adm234@localhost/phoenix_crm`
 
 
-console.log('--t-x->' + connectionString )
+//console.log('--t-x->' + connectionString )
 const pool = new Pool({
   connectionString: isProduction ? process.env.DATABASE_URL: connectionString
   // descomentar para fazer deploy no heroku
- // , ssl: {
- //   rejectUnauthorized: false,
- // }
+  , ssl: {
+    rejectUnauthorized: false,
+  }
 })
 
 
