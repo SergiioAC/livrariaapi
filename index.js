@@ -10,6 +10,7 @@ app.use(cors())
 
 const controleEditora = require('./controladores/editoras')
 const controleLivro = require('./controladores/livros')
+const controleProcesso = require('./controladores/processos')
 
 app
     .route('/editoras')
@@ -33,6 +34,18 @@ app
     .route('/livros/:codigo')
     .get(controleLivro.getLivroPorCodigo)
     .delete(controleLivro.deleteLivro)    
+
+    
+    app
+    .route('/processo')
+    .get(controleProcesso.getProcessos)
+    .post(controleProcesso.addProcesso)
+    .put(controleProcesso.updateProcesso)
+
+app
+    .route('/processo/:codigo')
+    .get(controleProcesso.getProcessoPorCodigo)
+    .delete(controleProcesso.deleteProcesso)    
 
     
     
