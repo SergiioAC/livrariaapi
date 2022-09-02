@@ -37,13 +37,13 @@ app
 
     
     app
-    .route('/processo')
+    .route('/processos')
     .get(controleProcesso.getProcessos)
     .post(controleProcesso.addProcesso)
     .put(controleProcesso.updateProcesso)
 
 app
-    .route('/processo/:codigo')
+    .route('/processos/:codigo')
     .get(controleProcesso.getProcessoPorCodigo)
     .delete(controleProcesso.deleteProcesso)    
 
