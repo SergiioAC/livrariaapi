@@ -2,11 +2,7 @@ const { pool } = require("../config");
 const { request, response } = require("express");
 
 const getProcessos = (request, response) => {
-    pool.query("select l.codigo as codigo, l.nome as nome, l.autor as autor,  \
-    to_char(l.data_lancamento, \'DD-MM-YYYY\') as data_lancamento, \
-    l.editora as editora, e.nome as editora_nome \
-    from Processos l \
-    join editoras e on e.codigo = l.editora order by l.codigo", (error, results) => {
+    pool.query("select id , Nome , Email , Cpf_Cnpj from Processos  order by id", (error, results) => {
         if (error) {
             return response.status(401).json({status: 'error', 
             message: 'Erro ao recuperar os -Processos: ' + error});
@@ -30,15 +26,15 @@ const getProcessos = (request, response) => {
 module.exports.getProcessos = getProcessos;
 
 const addProcesso = (request, response) => {
-    const { nome , autor, data_lancamento, editora } = request.body
+    const { Nome , Email , Cpf_Cnpj } = request.body
 
     pool.query(
-        'insert into Processos (nome , autor, data_lancamento, editora) values ($1, $2, $3, $4)',
-        [nome , autor, data_lancamento, editora],
+        'insert into Processos ( Nome , Email , Cpf_Cnpj , editora) values ($1, $2, $3 )',
+        [Nome , Email , Cpf_Cnpj],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
-                message: 'Erro ao inserir o Processo: WWWWWW ' + error });
+                message: 'Erro ao inserir o Processo: ' + error });
             }
             response.status(201).json({ status: 'success', message: 'Processo criado.' })
         }        
@@ -49,11 +45,11 @@ module.exports.addProcesso = addProcesso;
 
 
 const updateProcesso = (request, response) => {
-    const { codigo, nome , autor, data_lancamento, editora } = request.body
+    const { id , Nome , Email , Cpf_Cnpj } = request.body
 
     pool.query(
-        'update Processos set nome = $1, autor = $2, data_lancamento = $3, editora = $4 where codigo = $5',
-        [nome , autor, data_lancamento, editora, codigo],
+        'update Processos set nome = $1, email = $2, Cpf_Cnpj = $3 where id = $4',
+        [Nome , Email , Cpf_Cnpj, id],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
@@ -68,17 +64,17 @@ module.exports.updateProcesso = updateProcesso;
 
 const deleteProcesso = (request, response) => {
 
-    const codigo = parseInt(request.params.codigo)    
+    const id = parseInt(request.params.id)    
 
     pool.query(
-        'delete from Processos where codigo = $1',
+        'delete from Processos where id = $1',
         [codigo],
         (error, results) => {
             if (error || results.rowCount == 0) {
                 return response.status(401).json({ status: 'error', 
-                message: 'Não foi possível remover o Processo: ' + error });
+                message: 'Não foi possível deletar o Processo: ' + error });
             }
-            response.status(201).json({ status: 'success', message: 'Processo removido.' })
+            response.status(201).json({ status: 'success', message: 'Processo deletado.' })
         }        
     )
 }
