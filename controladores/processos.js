@@ -29,7 +29,7 @@ const addProcesso = (request, response) => {
     const { Nome , Email , Cpf_Cnpj } = request.body
 
     pool.query(
-        'insert into Processos ( Nome , Email , Cpf_Cnpj ) values ($1, $2, $3 )',
+        'insert into Processos ( Nome , Email , Cpf_Cnpj ,id_entrada ) values ($1, $2, $3 , 0 )',
         [Nome , Email , Cpf_Cnpj],
         (error) => {
             if (error) {
