@@ -9,7 +9,7 @@ const getLivros = (request, response) => {
     join editoras e on e.codigo = l.editora order by l.codigo", (error, results) => {
         if (error) {
             return response.status(401).json({status: 'error', 
-            message: 'Erro ao recuperar os livros: ' + error});
+            message: 'Erro ao recuperar os -livros: ' + error});
         }
         response.status(200).json(results.rows)
     })
