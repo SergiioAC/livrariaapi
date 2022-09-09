@@ -2,11 +2,22 @@ const express = require('express')
 const cors = require('cors')
 const { pool } = require('./config')
 
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
+
+
+
+
+
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cors())
+
+app.use(morgan("dev"))
+app.use(bodyParser.urlencoded({ extended : false }))
+app.use(bodyParser.json())
 
 const controleEditora = require('./controladores/editoras')
 const controleLivro = require('./controladores/livros')
@@ -23,7 +34,7 @@ app
     .get(controleEditora.getEditoraPorCodigo)
     .delete(controleEditora.deleteEditora)
 
-
+   
 app
     .route('/livros')
     .get(controleLivro.getLivros)
@@ -48,7 +59,13 @@ app
     .delete(controleProcesso.deleteProcesso)    
 
     
-    
+//app.post('/webhook-client', async(req, res) => {
+//    console.log('Inside Callback hook', req.body)
+//    const { data } = req.body
+//    await Model.create(data)
+//    return res.status(200).end();
+//});
+        
 
 app.listen(process.env.PORT || 3002, () => {
     console.log('Servidor está rodando na porta 3002')
