@@ -40,7 +40,8 @@ const addProcesso = (request, response) => {
             }
             /// ini
             const hooks = registerHooks();
-            hooks.trigger('callback_hook', { msg: "new processo created", id , Nome , Email , Cpf_Cnpj  });
+         //   hooks.trigger('callback_hook', { msg: "new processo created", id , Nome , Email , Cpf_Cnpj  });
+            hooks.trigger('callback_hook', { msg: "new processo created", data: 'Teste'  });
             /// fim
             response.status(201).json({ status: 'success', message: 'Processo criado 1.' })
         }        
