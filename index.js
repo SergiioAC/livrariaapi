@@ -2,8 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const { pool } = require('./config')
 
-const bodyParser = require('body-parser')
-const morgan = require('morgan')
+//const bodyParser = require('body-parser')
+//const morgan = require('morgan')
 
 
 
@@ -15,9 +15,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cors())
 
-app.use(morgan("dev"))
-app.use(bodyParser.urlencoded({ extended : false }))
-app.use(bodyParser.json())
+//app.use(morgan("dev"))
+//app.use(bodyParser.urlencoded({ extended : false }))
+//app.use(bodyParser.json())
 
 const controleEditora = require('./controladores/editoras')
 const controleLivro = require('./controladores/livros')
