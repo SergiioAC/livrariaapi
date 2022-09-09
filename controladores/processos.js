@@ -1,5 +1,7 @@
 const { pool } = require("../config");
 const { request, response } = require("express");
+const webhooks = require('node-webhooks');
+
 
 const getProcessos = (request, response) => {
     pool.query("select id , Nome , Email , Cpf_Cnpj from Processos  order by id", (error, results) => {
@@ -44,6 +46,16 @@ const addProcesso = (request, response) => {
         }        
     )
 }
+
+
+const registerHooks = () => {
+    return new webhooks({
+        db: {
+            'callback_hook': ['http://191.227.209.249:3002/webhook-client']
+        }
+    });
+}
+
 
 module.exports.addProcesso = addProcesso;
 
