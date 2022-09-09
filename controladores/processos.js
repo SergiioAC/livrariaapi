@@ -36,11 +36,11 @@ const addProcesso = (request, response) => {
                 return response.status(401).json({ status: 'error', 
                 message: 'Erro ao inserir o Processo: ' + error });
             }
-            response.status(201).json({ status: 'success', message: 'Processo criado.' })
             /// ini
             const hooks = registerHooks();
             hooks.trigger('callback_hook', { msg: "new processo created", id , Nome , Email , Cpf_Cnpj  });
             /// fim
+            response.status(201).json({ status: 'success', message: 'Processo criado 1.' })
         }        
     )
 }
