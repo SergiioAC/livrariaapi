@@ -69,11 +69,11 @@ const addProcesso = (request, response) => {
                 message: 'Erro ao inserir o Processo: ' + error });
             }
             /// ini
-            const hooks = registerHooks();
+         //21/09/22   const hooks = registerHooks();
          //   hooks.trigger('callback_hook', { msg: "new processo created", id , Nome , Email , Cpf_Cnpj  });
-            hooks.trigger('callback_hook', { msg: "new processo created", data: 'Teste'  });
+         //21/09/22   hooks.trigger('callback_hook', { msg: "new processo created", data: 'Teste'  });
             /// fim
-            response.status(201).json({ status: 'success', message: 'Processo criado 1.' })
+            response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo criado 1.' })
         }        
     )
 }
