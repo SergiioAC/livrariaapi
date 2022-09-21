@@ -61,7 +61,8 @@ const addProcesso = (request, response) => {
     const { Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto } = request.body
 
     pool.query(
-        'insert into Processos ( Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto ,id_entrada ) values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 )',
+        'insert into Processos ( Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto ,id_entrada )'+
+         'values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 )',
         [Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto,0],
         (error) => {
             if (error) {
