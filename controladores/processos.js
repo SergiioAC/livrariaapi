@@ -1,10 +1,12 @@
 const { pool } = require("../config");
 const { request, response } = require("express");
-const webhooks = require('node-webhooks');
+// const webhooks = require('node-webhooks');
 
+
+//============================================================================================
 
 const getProcessos = (request, response) => {
-    pool.query("select id , Nome , Email , Cpf_Cnpj from Processos  order by id", (error, results) => {
+    pool.query("select id, Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto from Processos  order by id", (error, results) => {
         if (error) {
             return response.status(401).json({status: 'error', 
             message: 'Erro ao recuperar os -Processos: ' + error});
@@ -27,12 +29,40 @@ const getProcessos = (request, response) => {
 
 module.exports.getProcessos = getProcessos;
 
+//============================================================================================
+
+const getProcessos_Phoenix = (request, response) => {
+    pool.query("select id, Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto from Processos Where Situacao = '0' order by id", (error, results) => {
+        if (error) {
+            return response.status(401).json({status: 'error', 
+            message: 'Erro ao recuperar os -Processos: ' + error});
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+/*
+const getProcessos = (request, response) => {
+    pool.query("SELECT * FROM processos", (error, results) => {
+        if (error) {
+            return response.status(401).json({status: 'error', 
+            message: 'Erro ao recuperar os Processos 99 882ZZZZZ: ' + error});
+        }
+        response.status(200).json(results.rows)
+    })
+}
+*/
+module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
+
+//============================================================================================
+
+
 const addProcesso = (request, response) => {
     const { Nome , Email , Cpf_Cnpj } = request.body
 
     pool.query(
-        'insert into Processos ( Nome , Email , Cpf_Cnpj ,id_entrada ) values ($1, $2, $3 , $4 )',
-        [Nome , Email , Cpf_Cnpj,0],
+        'insert into Processos ( Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto ,id_entrada ) values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 )',
+        [Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto,0],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
@@ -47,26 +77,45 @@ const addProcesso = (request, response) => {
         }        
     )
 }
-
-
-const registerHooks = () => {
-    return new webhooks({
-        db: {
-            'callback_hook': ['http://191.227.209.249:3002/webhook-client']
-        }
-    });
-}
-
+//const registerHooks = () => {
+//    return new webhooks({
+//        db: {
+//            'callback_hook': ['http://191.227.209.249:3002/webhook-client']
+//        }
+//    });
+//}
 
 module.exports.addProcesso = addProcesso;
 
+//============================================================================================
 
-const updateProcesso = (request, response) => {
-    const { id , Nome , Email , Cpf_Cnpj } = request.body
+const updateProcesso_Phoenix = (request, response) => {
+    const { id } = request.body
 
     pool.query(
-        'update Processos set nome = $1, email = $2, Cpf_Cnpj = $3 where id = $4',
-        [Nome , Email , Cpf_Cnpj, id],
+        'update Processos set Situacao = $1  where id = $2',
+        [ 0 , id],
+        (error) => {
+            if (error) {
+                return response.status(401).json({ status: 'error', 
+                message: 'Erro ao atualizar o Processo: ' + error +'-->' + id });
+            }
+            response.status(201).json({ status: 'success', message: 'Processo atualizado.' })
+        }        
+    )
+}
+
+
+module.exports.updateProcesso_Phoenix = updateProcesso_Phoenix;
+
+//============================================================================================
+
+const updateProcesso = (request, response) => {
+    const { id, Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto } = request.body
+
+    pool.query(
+        'update Processos set nome = $1, email = $2, Cpf_Cnpj = $3, Telefone  = $4, Cep  = $5, Cidade  = $6, Uf  = $7, id_Segmento = $8,id_Produto = $9  where id = $10',
+        [Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto, id],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
@@ -80,6 +129,8 @@ const updateProcesso = (request, response) => {
 }
 
 module.exports.updateProcesso = updateProcesso;
+
+//============================================================================================
 
 const deleteProcesso = (request, response) => {
 
@@ -99,6 +150,8 @@ const deleteProcesso = (request, response) => {
 }
 
 module.exports.deleteProcesso = deleteProcesso;
+
+//============================================================================================
 
 const getProcessoPorCodigo = (request, response) => {
 

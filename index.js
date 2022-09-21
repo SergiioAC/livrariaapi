@@ -53,6 +53,11 @@ app
     .post(controleProcesso.addProcesso)
     .put(controleProcesso.updateProcesso)
 
+    app
+    .route('/processos_Phoenix')
+    .get(controleProcesso.getProcessos_Phoenix)
+    .put(controleProcesso.updateProcesso_Phoenix)
+
 app
     .route('/processos/:codigo')
     .get(controleProcesso.getProcessoPorCodigo)
