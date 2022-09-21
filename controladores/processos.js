@@ -58,7 +58,7 @@ module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
 
 
 const addProcesso = (request, response) => {
-    const { Nome , Email , Cpf_Cnpj } = request.body
+    const { Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto } = request.body
 
     pool.query(
         'insert into Processos ( Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto ,id_entrada ) values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 )',
@@ -112,9 +112,10 @@ module.exports.updateProcesso_Phoenix = updateProcesso_Phoenix;
 
 const updateProcesso = (request, response) => {
     const { id, Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto } = request.body
+    
 
     pool.query(
-        'update Processos set nome = $1, email = $2, Cpf_Cnpj = $3, Telefone  = $4, Cep  = $5, Cidade  = $6, Uf  = $7, id_Segmento = $8,id_Produto = $9  where id = $10',
+        'update Processos set nome = $1, email = $2, Cpf_Cnpj = $3, Telefone  = $4, Cep  = $5, Cidade  = $6, Uf  = $7, id_Segmento = $8,id_Produto = $9 where id = $10',
         [Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto, id],
         (error) => {
             if (error) {
