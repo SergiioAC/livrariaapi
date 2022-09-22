@@ -58,7 +58,7 @@ module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
 
 
 const addProcesso = (request, response) => {
-    const { Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto } = request.body
+    const { Email , Nome, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto } = request.body
 
     pool.query(
         'insert into Processos ( Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto ,id_entrada )'+
@@ -87,6 +87,38 @@ const addProcesso = (request, response) => {
 //}
 
 module.exports.addProcesso = addProcesso;
+
+//============================================================================================
+const addProcesso_WebHooks = (request, response) => {
+    const { Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto } = request.body
+
+    pool.query(
+        'insert into Processos ( Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto ,id_entrada )'+
+         'values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 )',
+        [Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto,0],
+        (error) => {
+            if (error) {
+                return response.status(401).json({ status: 'error', 
+                message: 'Erro ao inserir o Processo: ' + error });
+            }
+            /// ini
+         //21/09/22   const hooks = registerHooks();
+         //   hooks.trigger('callback_hook', { msg: "new processo created", id , Nome , Email , Cpf_Cnpj  });
+         //21/09/22   hooks.trigger('callback_hook', { msg: "new processo created", data: 'Teste'  });
+            /// fim
+            response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo criado 1.' })
+        }        
+    )
+}
+//const registerHooks = () => {
+//    return new webhooks({
+//        db: {
+//            'callback_hook': ['http://191.227.209.249:3002/webhook-client']
+//        }
+//    });
+//}
+
+module.exports.addProcesso_WebHooks = addProcesso_WebHooks;
 
 //============================================================================================
 

@@ -54,6 +54,10 @@ app
     .put(controleProcesso.updateProcesso)
 
     app
+    .route('/WebHooks')
+    .post(controleProcesso.addProcesso_WebHooks)
+
+    app
     .route('/processos_Phoenix')
     .get(controleProcesso.getProcessos_Phoenix)
     .put(controleProcesso.updateProcesso_Phoenix)
