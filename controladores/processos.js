@@ -6,7 +6,7 @@ const { request, response } = require("express");
 //============================================================================================
 
 const getProcessos = (request, response) => {
-    pool.query("select id, Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto , criacao , id_origem from Processos  order by id", (error, results) => {
+    pool.query("select id, Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto , criacao , id_origem from Processos  order by id", (error, results) => {
         if (error) {
             return response.status(401).json({status: 'error', 
             message: 'Erro ao recuperar os yProcessos: ' + error});
@@ -32,7 +32,7 @@ module.exports.getProcessos = getProcessos;
 //============================================================================================
 
 const getProcessos_Phoenix = (request, response) => {
-    pool.query("select id, Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto  , criacao , id_origem from Processos Where Situacao = '0' order by id", (error, results) => {
+    pool.query("select id, Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto  , criacao , id_origem from Processos Where Situacao = '0' order by id", (error, results) => {
         if (error) {
             return response.status(401).json({status: 'error', 
             message: 'Erro ao recuperar os xProcessos: ' + error});
@@ -58,12 +58,12 @@ module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
 
 
 const addProcesso = (request, response) => {
-    const { Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto  , criacao , id_origem } = request.body
+    const { Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto  , criacao , id_origem } = request.body
 
     pool.query(
-        'insert into Processos ( Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto  , criacao , id_origem ,id_entrada )'+
+        'insert into Processos ( Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto  , criacao , id_origem ,id_entrada )'+
          'values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 )',
-        [Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto , criacao , id_origem , 0 ],
+        [Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto , criacao , id_origem , 0 ],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
@@ -92,12 +92,12 @@ module.exports.addProcesso = addProcesso;
 //============================================================================================
 
 const addProcesso_WebHooks = (request, response) => {
-    const { Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, Segmento, Produto , ip_address , date_submitted , time_submitted } = request.body
+    const { Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, Segmento, Produto , ip_address , date_submitted , time_submitted } = request.body
 
     pool.query(
-        'insert into Processos ( Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto ,id_entrada , ip , ???? )'+
+        'insert into Processos ( Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto ,id_entrada , ip , ???? )'+
          'values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 )',
-        [Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, Segmento, Produto,0 , ip_address , date_submitted , time_submitted ],
+        [Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, Segmento, Produto,0 , ip_address , date_submitted , time_submitted ],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
@@ -146,12 +146,12 @@ module.exports.updateProcesso_Phoenix = updateProcesso_Phoenix;
 //============================================================================================
 
 const updateProcesso = (request, response) => {
-    const { id, Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto  , criacao , id_origem } = request.body
+    const { id, Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto  , criacao , id_origem } = request.body
     
 
     pool.query(
-        'update Processos set nome = $1, email = $2, Cpf_Cnpj = $3, Telefone  = $4, Cep  = $5, Cidade  = $6, Uf  = $7, id_Segmento = $8,id_Produto = $9  , criacao = $10 , id_origem = $11 where id = $12',
-        [Nome, Email, Cpf_Cnpj, Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto,  criacao , id_origem , id],
+        'update Processos set nome = $1, email = $2, Cpf_Cnpj = $3, ddd , Telefone  = $4, Cep  = $5, Cidade  = $6, Uf  = $7, id_Segmento = $8,id_Produto = $9  , criacao = $10 , id_origem = $11 where id = $12',
+        [Nome, Email, Cpf_Cnpj, ddd , Telefone, Cep, Cidade, Uf, id_Segmento, id_Produto,  criacao , id_origem , id],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
