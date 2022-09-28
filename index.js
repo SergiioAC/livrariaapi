@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const { pool } = require('./config')
-
+const moment = require('moment')
 //const bodyParser = require('body-parser')
 //const morgan = require('morgan')
 
@@ -77,6 +77,25 @@ app
         
 
 app.listen(process.env.PORT || 3002, () => {
+
+//    const mdata = '2022-01-31';
+//    const mtime = '08:12 PM';
+//    var ydata = mdata+' '+mtime;
+//    console.log(ydata); //será mostrado 27/11/2020 22:00:00
+
+//    let databrasilminutos = moment( ydata ).format('DD/MM/YY hh:mm:ss');
+//    console.log(databrasilminutos); //será mostrado 27/11/2020 22:00:00
+
+//    console.log(mdata + ' ' + mtime );
+
+
+//    var xdata = moment()
+//console.log( xdata );
+
+//let data = moment();
+//console.log(data);
+
+
     console.log('Servidor está rodando na porta 3002')
 })
 
