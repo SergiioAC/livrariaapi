@@ -54,6 +54,30 @@ const getProcessos = (request, response) => {
 */
 module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
 
+const getProcessos_PhoenixDados = (request, response) => {
+    pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem from Processos Where Situacao = '0' order by id", (error, results) => {
+        if (error) {
+            return response.status(401).json({status: 'error', 
+            message: 'Erro ao recuperar os xProcessos: ' + error});
+        }
+        response.status(200).results.rows
+    })
+}
+
+/*
+const getProcessos = (request, response) => {
+    pool.query("SELECT * FROM processos", (error, results) => {
+        if (error) {
+            return response.status(401).json({status: 'error', 
+            message: 'Erro ao recuperar os Processos 99 882ZZZZZ: ' + error});
+        }
+        response.status(200).json(results.rows)
+    })
+}
+*/
+module.exports.getProcessos_Phoenix = getProcessos_PhoenixDados;
+
+
 //============================================================================================
 
 
