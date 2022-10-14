@@ -33,7 +33,6 @@ app
     .route('/editoras/:codigo')
     .get(controleEditora.getEditoraPorCodigo)
     .delete(controleEditora.deleteEditora)
-
    
 app
     .route('/livros')
@@ -47,19 +46,24 @@ app
     .delete(controleLivro.deleteLivro)    
 
     
-    app
+app
     .route('/processos')
     .get(controleProcesso.getProcessos)
     .post(controleProcesso.addProcesso)
     .put(controleProcesso.updateProcesso)
 
-    app
+app
     .route('/WebHooks')
     .post(controleProcesso.addProcesso_WebHooks)
 
     app
     .route('/processos_Phoenix')
     .get(controleProcesso.getProcessos_Phoenix)
+//    .put(controleProcesso.updateProcesso_Phoenix)
+
+    app
+    .route('/processos_Phoenix/:codigo')
+  //  .get(controleProcesso.getProcessos_Phoenix)
     .put(controleProcesso.updateProcesso_Phoenix)
 
 app
