@@ -62,7 +62,7 @@ app
 //    .put(controleProcesso.updateProcesso_Phoenix)
 
     app
-    .route('/processos_Update_Phoenix/:id')
+    .route('/processos_Update_Phoenix/:id,:st')
   //  .get(controleProcesso.getProcessos_Phoenix)
     .put(controleProcesso.updateProcesso_Phoenix)
 

@@ -127,13 +127,15 @@ module.exports.addProcesso_WebHooks = addProcesso_WebHooks;
 //============================================================================================
 
 const updateProcesso_Phoenix = (request, response) => {
-  //  const { id } = request.body
+//    const { id } = request.body
+//    const { st } = request.body
     
-    const id = parseInt(request.params.id)    
+  const id = parseInt(request.params.id)    
+  const st = parseInt(request.params.st)    
 
     pool.query(
         'update Processos set Situacao = $1  where id = $2',
-        [ '1' , id],
+        [ st , id],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
