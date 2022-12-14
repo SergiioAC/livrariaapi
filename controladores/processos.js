@@ -75,10 +75,15 @@ const addProcesso = (request, response) => {
          'values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16)',
         [Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , 0 ],
         (error) => {
-            if (error) {
+            if (error,q_res) {
                 return response.status(401).json({ status: 'error', 
                 message: 'Erro ao inserir o Processo: ' + error });
             }
+            console.log(q_res.rows);
+            console.log(q_res.id);
+
+
+
             /// ini
             
          //21/09/22   const hooks = registerHooks();
