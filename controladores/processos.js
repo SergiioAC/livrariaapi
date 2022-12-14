@@ -59,7 +59,16 @@ module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
 
 
 const addProcesso = (request, response) => {
-    const { Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem } = request.body
+    const { Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
+
+    const jsProdutos = JSON.stringify( Produtos );
+    const aProdutos = JSON.parse( jsProdutos );
+
+    aProdutos.map( ( Produto ) => {
+       console.log( Produto.Codigo  );
+       console.log( Produto.Quantidade  );
+       console.log( Produto.ValorUnitario  )
+       })
 
     pool.query(
         'insert into Processos ( Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem ,id_entrada )'+
