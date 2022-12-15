@@ -91,7 +91,8 @@ const addProcesso = (request, response) => {
          //21/09/22   hooks.trigger('callback_hook', { msg: "new processo created", data: 'Teste'  });
             /// fim
 //          response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo "'+response.json(q_res.id)+'" criado 1.' })
-            response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo "'+res.id+'" criado 1.' })
+            response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo "'+res.id+'" criado 1.' , body: { product: { id , Nome, Email, ddi }}
+    },)
         }        
     )
 }
