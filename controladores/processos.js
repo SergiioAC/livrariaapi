@@ -74,12 +74,12 @@ const addProcesso = (request, response) => {
         'insert into Processos ( Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem ,id_entrada )'+
          'values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16) Returning id ',
         [Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , 0 ],
-        (error,q_res) => {
+        (error,res) => {
             if (error) {
                 return response.status(401).json({ status: 'error',
                 message: 'Erro ao inserir o Processo: ' + error });
             }
-            console.log(q_res.id);
+         //   console.log(q_res.id);
          //   console.log(response.json(q_res.id));
 
 
@@ -90,7 +90,8 @@ const addProcesso = (request, response) => {
          //   hooks.trigger('callback_hook', { msg: "new processo created", id , Nome , Email , Cpf_Cnpj  });
          //21/09/22   hooks.trigger('callback_hook', { msg: "new processo created", data: 'Teste'  });
             /// fim
-            response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo "'+response.json(q_res.id)+'" criado 1.' })
+//          response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo "'+response.json(q_res.id)+'" criado 1.' })
+            response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo "'+res.id+'" criado 1.' })
         }        
     )
 }
