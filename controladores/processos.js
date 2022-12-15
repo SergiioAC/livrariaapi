@@ -79,8 +79,8 @@ const addProcesso = (request, response) => {
                 return response.status(401).json({ status: 'error', 
                 message: 'Erro ao inserir o Processo: ' + error });
             }
-            console.log(q_res.rows);
-            console.log(q_res.id);
+            //console.log(q_res.rows);
+            console.log(response.json(q_res.id));
 
 
 
