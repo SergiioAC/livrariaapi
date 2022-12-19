@@ -31,8 +31,71 @@ module.exports.getProcessos = getProcessos;
 
 //============================================================================================
 
+const getProcessos_Phoenix = async (request, response) => 
+{
+   try
+   {
+       Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
+       " and Exists( Select * from processos_produtos where processos_produtos.id=processos.id ) order by id limit 10")
+//     console.log(typeof(Get3))
+     const Get3Str  = JSON.stringify( Get3 );
+//     console.log('Oi1')
+//     console.log(Get3.rows)
+//     console.log('Oi2')
+       const Get3Json = JSON.parse( Get3Str );
+//       console.log(typeof(Get3Json));   
+//       console.log('Oi3');
+//       console.log(Get3Json.rows.length);
+//       console.log('Oi4');
+//       console.log('Oi7');
+//       console.log('Oi10');
+//       console.log('Oi11');
+//       console.log(Get3Json.rows.length+1);
+//       console.log(Get3Json.rows.length+2);
+//       console.log(Get3Json.rows.length+3);
+       for (let zFor = 0 ; zFor < Get3Json.rows.length ; zFor++ )
+       {
+//        console.log(Get3Json.rows.length+zFor);
+//        console.log(Get3Json.rows[zFor].id)
+        Get4 = await pool.query("Select seq,codigo, quantidade, valorunitario, instalacao , opcionais , frete  from Processos_Produtos Where id = $1 order by Seq",[ Get3Json.rows[zFor].id ] )
+        const Get4Str  = JSON.stringify( Get4 );
+        const Get4Json = JSON.parse( Get4Str );
+//        console.log(Get4Json.rows.length);
+//        console.log('Oi17');
+        //for (let zFor2= 0 ; zFor2< Get4Json.rows.length  ; zFor2++ )
+        //{
+        //    console.log(Get4Json.rows[zFor2].seq+' '+Get4Json.rows[zFor2].codigo+' '+Get4Json.rows[zFor2].quantidade+' '+Get4Json.rows[zFor2].valorunitario)
+        //} 
+//        console.log('Oi18');
+//        console.log( JSON.stringify( Get3Json.rows[zFor] ) );
+//        console.log('Oi19');
+//        console.log( JSON.stringify( Get3Json.rows ) );
+//        console.log('Oi20');
+        const aNovo1 = JSON.stringify( Get3Json.rows[zFor] )
+        const aNovo2 = JSON.stringify( Get4Json.rows )
+//        console.log( aNovo1.length );
+ 
+        const aNovo  = aNovo1.substring( 1 , aNovo1.length - 1 ) + ',"produto":'+aNovo2+'}'
+
+//      console.log( aNovo );
+//      console.log('Oi21');
+
+       }
+//       console.log('*** Final ***');
+  
+
+   }     
+   catch(error) {
+                  return response.status(401).json({status: 'error',message: 'Erro ao recuperar os Processos: '});
+                }     
+   response.status(200).json(Get3.rows)
+}
+
+/*17/12/22
 const getProcessos_Phoenix = (request, response) => {
-    pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' order by id", (error, results) => {
+    pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' order by id"
+    ,
+     (error, results) => {
         if (error) {
             return response.status(401).json({status: 'error', 
             message: 'Erro ao recuperar os xProcessos: ' + error});
@@ -40,7 +103,7 @@ const getProcessos_Phoenix = (request, response) => {
         response.status(200).json(results.rows)
     })
 }
-
+*/
 /*
 const getProcessos = (request, response) => {
     pool.query("SELECT * FROM processos", (error, results) => {
@@ -58,44 +121,65 @@ module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
 //============================================================================================
 
 
-const addProcesso = (request, response) => {
-    const { Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
+const addProcesso = async (request, response) => 
+{
+   const Ins3 = []
+   try
+   {
+       const { id_original , Situacao , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
+       let Ins3 = await pool.query
+           (
+              'insert into Processos( id_original , situacao , id_entrada , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem ) '+
+              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18 ) RETURNING id '
+              ,
+              [ id_original , Situacao , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem ]
+           )
+//,
+//        (error,res) => {
+//                         if (error)
+//                                    {
+//                                      return response.status(401).json(  { status: 'error',message: 'Erro 1 ao inserir o Processo: ' + error } );
+//                                    }
+//                                    console.log( 'oi 1')
+//                                    console.log( typeof(Ins3))
+                                    
+//                                }
+//        )
 
-    const jsProdutos = JSON.stringify( Produtos );
-    const aProdutos = JSON.parse( jsProdutos );
+//        console.log( 'oi 2')n
+//        console.log( typeof(Ins3))
+     //   console.log( Ins3.rows[0]['id'] )
+//     let Ins32 = Ins3
 
-    aProdutos.map( ( Produto ) => {
-       console.log( Produto.Codigo  );
-       console.log( Produto.Quantidade  );
-       console.log( Produto.ValorUnitario  )
-       })
+   
+        if (Ins3.rows[0] ) 
+           { 
+            // Inicio dos produtos
+              const jsProdutos = JSON.stringify( Produtos );
+              const aProdutos = JSON.parse( jsProdutos );
 
-    pool.query(
-        'insert into Processos ( Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem ,id_entrada )'+
-         'values ($1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16) Returning id ',
-        [Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , 0 ],
-        (error,res) => {
-            if (error) {
-                return response.status(401).json({ status: 'error',
-                message: 'Erro ao inserir o Processo: ' + error });
-            }
-         //   console.log(q_res.id);
-         //   console.log(response.json(q_res.id));
+              for (let zFor = 0 ; zFor < aProdutos.length ; zFor++ )
+              {
+                  const Prods = pool.query
+                  (
+                   'insert into Processos_produtos ( Id,Seq,Codigo,Quantidade,ValorUnitario,Instalacao,Opcionais,Frete ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 ) ',
+                    [ Ins3.rows[0]['id'] , zFor+1 ,aProdutos[ zFor ].Codigo,aProdutos[ zFor ].Quantidade,aProdutos[ zFor ].ValorUnitario,aProdutos[ zFor ].Instalacao,aProdutos[ zFor ].Opcionais,aProdutos[ zFor ].Frete ],
+                  )
+              }
+ 
+                  // Fim dos produtos
+           }
+           
+   } 
+   catch(error)
+                 {
+                    if (error)
+                    { return response.status(400).send( error  ) } else { return response.status(200).Send( Ins3.rows[0]['id'] ) }
+                 }
+                 response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo criado 2.'})
+}        
+    
 
-
-
-            /// ini
-            
-         //21/09/22   const hooks = registerHooks();
-         //   hooks.trigger('callback_hook', { msg: "new processo created", id , Nome , Email , Cpf_Cnpj  });
-         //21/09/22   hooks.trigger('callback_hook', { msg: "new processo created", data: 'Teste'  });
-            /// fim
-//          response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo "'+response.json(q_res.id)+'" criado 1.' })
-            response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo "'+res.id+'" criado 1.' , body: { product: { id , Nome, Email, ddi }}
-    },)
-        }        
-    )
-}
 //const registerHooks = () => {
 //    return new webhooks({
 //        db: {
