@@ -35,8 +35,16 @@ const getProcessos_Phoenix = async (request, response) =>
 {
    try
    {
-       Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
-       " and Exists( Select * from processos_produtos where processos_produtos.id=processos.id ) order by id limit 10")
+
+
+    Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
+    "  order by id ")
+
+//  Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
+//  " and Exists( Select * from processos_produtos where processos_produtos.id=processos.id ) order by id limit 10")
+
+
+
 //     console.log(typeof(Get3))
      const Get3Str  = JSON.stringify( Get3 );
 //     console.log('Oi1')
