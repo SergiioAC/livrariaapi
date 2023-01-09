@@ -62,7 +62,7 @@ app
 //    .put(controleProcesso.updateProcesso_Phoenix)
 
     app
-    .route('/processos_Update_Phoenix/:id,:st')
+    .route('/processos_Update_Phoenix/:id,:st,:np')
   //  .get(controleProcesso.getProcessos_Phoenix)
     .put(controleProcesso.updateProcesso_Phoenix)
 
@@ -99,7 +99,7 @@ app.listen(process.env.PORT || 3002, () => {
 //console.log(data);
 
 
-    console.log('Servidor está rodando na porta 3002')
+   console.log('Servidor está rodando na porta '+(process.env.PORT || 3002))
 })
 
 

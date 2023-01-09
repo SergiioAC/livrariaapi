@@ -33,24 +33,24 @@ module.exports.getProcessos = getProcessos;
 
 const getProcessos_Phoenix = async (request, response) => 
 {
-   try
+    let aNovo = ''
+
+    try
    {
 
 
-    Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
-    "  order by id ")
+      Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where ( Situacao = '0' or Situacao = '4' ) "+
+                              " order by id ")
 
 //  Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
 //  " and Exists( Select * from processos_produtos where processos_produtos.id=processos.id ) order by id limit 10")
 
-
-
 //     console.log(typeof(Get3))
-     const Get3Str  = JSON.stringify( Get3 );
+      const Get3Str  = JSON.stringify( Get3 );
 //     console.log('Oi1')
 //     console.log(Get3.rows)
 //     console.log('Oi2')
-       const Get3Json = JSON.parse( Get3Str );
+      const Get3Json = JSON.parse( Get3Str );
 //       console.log(typeof(Get3Json));   
 //       console.log('Oi3');
 //       console.log(Get3Json.rows.length);
@@ -65,7 +65,7 @@ const getProcessos_Phoenix = async (request, response) =>
        {
 //        console.log(Get3Json.rows.length+zFor);
 //        console.log(Get3Json.rows[zFor].id)
-        Get4 = await pool.query("Select seq,codigo, quantidade, valorunitario, instalacao , opcionais , frete  from Processos_Produtos Where id = $1 order by Seq",[ Get3Json.rows[zFor].id ] )
+        Get4 = await pool.query("Select seq,codigo, quantidade, valorunitario, instalacao , opcionais , frete ,Proposta from Processos_Produtos Where id = $1 order by Seq",[ Get3Json.rows[zFor].id ] )
         const Get4Str  = JSON.stringify( Get4 );
         const Get4Json = JSON.parse( Get4Str );
 //        console.log(Get4Json.rows.length);
@@ -80,13 +80,17 @@ const getProcessos_Phoenix = async (request, response) =>
 //        console.log( JSON.stringify( Get3Json.rows ) );
 //        console.log('Oi20');
         const aNovo1 = JSON.stringify( Get3Json.rows[zFor] )
+      //  console.log( aNovo1 )
         const aNovo2 = JSON.stringify( Get4Json.rows )
 //        console.log( aNovo1.length );
  
-        const aNovo  = aNovo1.substring( 1 , aNovo1.length - 1 ) + ',"produto":'+aNovo2+'}'
-
-//      console.log( aNovo );
-//      console.log('Oi21');
+        aNovo  = aNovo + ( aNovo1.substring( 0 , aNovo1.length - 1 ) + ',"produto":'+aNovo2+'}' )
+    //    console.log( '===========' )
+    //    console.log( aNovo1 )
+    //    console.log( '-----------' )
+    //    console.log( aNovo );
+    //    console.log( '~~~~~~~~~~~' )
+    //    console.log( aNovo1.substring( 0 , aNovo1.length - 1 ) );
 
        }
 //       console.log('*** Final ***');
@@ -96,7 +100,10 @@ const getProcessos_Phoenix = async (request, response) =>
    catch(error) {
                   return response.status(401).json({status: 'error',message: 'Erro ao recuperar os Processos: '});
                 }     
-   response.status(200).json(Get3.rows)
+            //  response.status(200).json(Get3.rows)
+//            response.status(200).json( aNovo )
+              response.status(200).send( aNovo )
+//              response.status(200).json( aNovo )
 }
 
 /*17/12/22
@@ -134,13 +141,13 @@ const addProcesso = async (request, response) =>
    const Ins3 = []
    try
    {
-       const { id_original , Situacao , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
+       const { id_original , Situacao , Arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
        let Ins3 = await pool.query
            (
-              'insert into Processos( id_original , situacao , id_entrada , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem ) '+
-              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18 ) RETURNING id '
+              'insert into Processos( id_original , Situacao , Arquivo , id_entrada , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem ) '+
+              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 ) RETURNING id '
               ,
-              [ id_original , Situacao , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem ]
+              [ id_original , Situacao , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem ]
            )
 //,
 //        (error,res) => {
@@ -170,8 +177,8 @@ const addProcesso = async (request, response) =>
               {
                   const Prods = pool.query
                   (
-                   'insert into Processos_produtos ( Id,Seq,Codigo,Quantidade,ValorUnitario,Instalacao,Opcionais,Frete ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 ) ',
-                    [ Ins3.rows[0]['id'] , zFor+1 ,aProdutos[ zFor ].Codigo,aProdutos[ zFor ].Quantidade,aProdutos[ zFor ].ValorUnitario,aProdutos[ zFor ].Instalacao,aProdutos[ zFor ].Opcionais,aProdutos[ zFor ].Frete ],
+                   'insert into Processos_produtos ( Id,Seq,Codigo,Quantidade,ValorUnitario,Instalacao,Opcionais,Frete,Proposta ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8, $9 ) ',
+                    [ Ins3.rows[0]['id'] , zFor+1 ,aProdutos[ zFor ].Codigo,aProdutos[ zFor ].Quantidade,aProdutos[ zFor ].ValorUnitario,aProdutos[ zFor ].Instalacao,aProdutos[ zFor ].Opcionais,aProdutos[ zFor ].Frete,aProdutos[ zFor ].Proposta  ],
                   )
               }
  
@@ -240,10 +247,11 @@ const updateProcesso_Phoenix = (request, response) => {
     
   const id = parseInt(request.params.id)    
   const st = parseInt(request.params.st)    
+  const np = request.params.np    // numero do processo no Phoenix
 
     pool.query(
-        'update Processos set Situacao = $1  where id = $2',
-        [ st , id],
+        'update Processos set Situacao = $1, processo = $2 where id = $3',
+        [ st , np , id],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 
