@@ -28,7 +28,7 @@ const connectionString = 'postgres://qlpkhvlz:YN9u6TIS3U8q1SwaWdqwJo86x9uBM1kZ@k
 
 
 // Heroku
-/*
+
    const pool = new Pool({
     connectionString: isProduction ? process.env.DATABASE_URL: connectionString
     // descomentar para fazer deploy no heroku
@@ -36,10 +36,11 @@ const connectionString = 'postgres://qlpkhvlz:YN9u6TIS3U8q1SwaWdqwJo86x9uBM1kZ@k
                rejectUnauthorized: false,
            }
     })
-*/
+
 
 
 // ElephantSql
+/*
 const credentials = {
   user: "qlpkhvlz",
   host: "kesavan.db.elephantsql.com",
@@ -48,6 +49,6 @@ const credentials = {
   //port: 5432,
 };
 const pool = new Pool( credentials )
-
+*/
 
 module.exports = {pool}
