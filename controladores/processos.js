@@ -39,7 +39,7 @@ const getProcessos_Phoenix = async (request, response) =>
    {
 
 
-      Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
+      Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where ( Situacao = '0' or Situacao = '4' ) "+
                               " order by id ")
 
 //  Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
@@ -98,7 +98,7 @@ const getProcessos_Phoenix = async (request, response) =>
 
    }     
    catch(error) {
-                  return response.status(401).json({status: 'error',message: 'Erro ao recuperar os Processos: '});
+                  return response.status(401).json({status: 'error',message: 'Erro ao recuperar os Processos: ' +error });
                 }     
             //  response.status(200).json(Get3.rows)
 //            response.status(200).json( aNovo )
