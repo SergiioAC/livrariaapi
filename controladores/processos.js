@@ -39,7 +39,7 @@ const getProcessos_Phoenix = async (request, response) =>
    {
 
 
-      Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where ( Situacao = '0' or Situacao = '4' ) "+
+      Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao = '0' or Situacao = '4' ) "+
                               " order by id ")
 
 //  Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
@@ -139,6 +139,7 @@ module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
 const addProcesso = async (request, response) => 
 {
    const Ins3 = []
+   let  Id2  = 0
    try
    {
        const { id_original , Situacao , Arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
@@ -185,13 +186,22 @@ const addProcesso = async (request, response) =>
                   // Fim dos produtos
            }
            
+           id2 = Ins3.rows[0]['id'] 
+
    } 
    catch(error)
                  {
                     if (error)
                     { return response.status(400).send( error  ) } else { return response.status(200).Send( Ins3.rows[0]['id'] ) }
                  }
-                 response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo criado 2.'})
+
+
+//               response.status(201).json({ status: 'sucesso na criação do lead', message: 'Processo criado 2.'})
+//response.status(201).json({ status: 'sucesso na criação do lead', message: id2 , id: id2})
+response.status(201).json({ status: 'sucesso na criação do lead', id: id2})
+
+                 
+
 }        
     
 

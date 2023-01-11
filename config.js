@@ -1,7 +1,8 @@
 require('dotenv').config()
 
+// Habilitar para Heroku
 const isProduction = process.env.NODE_ENV === 'production'
-//const isProduction =true // <- Para produção comentar essa linha
+
 
 const {Pool} = require('pg')
 
@@ -9,6 +10,7 @@ const {Pool} = require('pg')
 //28/09const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
 //const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
 
+// Habilitar p/ Heroku
 const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`
 
 //const connectionString = 'postgres://frngxudyyfvaxb:9823002c34b57b4daca5d0245ef3bd4fce5dfd92bcd2ffeb430575944a785034@ec2-44-209-24-62.compute-1.amazonaws.com:5432/d3im7u02qpgk60'
@@ -27,7 +29,7 @@ const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_P
 
 // Heroku
 
-   const pool = new Pool({
+const pool = new Pool({
     connectionString: isProduction ? process.env.DATABASE_URL: connectionString
     // descomentar para fazer deploy no heroku
     , ssl: {
@@ -48,5 +50,6 @@ const credentials = {
 };
 const pool = new Pool( credentials )
 */
+
 
 module.exports = {pool}
