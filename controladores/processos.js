@@ -255,12 +255,12 @@ const updateProcesso_Phoenix = (request, response) => {
 //    const { id } = request.body
 //    const { st } = request.body
     
-  const id = parseInt(request.params.id)    
-  const st = parseInt(request.params.st)    
-  const np = request.params.np    // numero do processo no Phoenix
+  const id = parseInt( request.params.id )    
+  const st = parseInt( request.params.st )    
+  const np = parseInt( request.params.np )   // numero do processo no Phoenix
 
     pool.query(
-        'update Processos set Situacao = $1, processo = $2 where id = $3',
+        'update Processos set Situacao = $1, processo_phoenix = $2 where id = $3',
         [ st , np , id],
         (error) => {
             if (error) {
@@ -272,8 +272,9 @@ const updateProcesso_Phoenix = (request, response) => {
     )
 }
 
-
 module.exports.updateProcesso_Phoenix = updateProcesso_Phoenix;
+
+
 
 //============================================================================================
 
