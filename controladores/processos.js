@@ -151,10 +151,10 @@ const addProcesso = async (request, response) =>
        const { id_original , Situacao , Arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
        let Ins3 = await pool.query
            (
-              'insert into Processos( id_original , Situacao , Arquivo , id_entrada , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem ) '+
-              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 ) RETURNING id '
+              'insert into Processos( id_original , Situacao , Arquivo , id_entrada , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Situacao_Proc) '+
+              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20 ) RETURNING id '
               ,
-              [ id_original , Situacao , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem ]
+              [ id_original , Situacao , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
            )
 //,
 //        (error,res) => {
@@ -267,7 +267,7 @@ const updateProcesso_Phoenix = (request, response) => {
 
     pool.query(
 //      'update Processos set Situacao = $1, processo_phoenix = $2 where id = $3',
-        'update Processos set Situacao_proc = $1, processo_phoenix = $2 where id = $3',
+        'update Processos set Situacao_Proc = $1, processo_phoenix = $2 where id = $3',
         [ st , np , id],
         (error) => {
             if (error) {
