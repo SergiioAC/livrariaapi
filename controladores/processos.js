@@ -39,8 +39,14 @@ const getProcessos_Phoenix = async (request, response) =>
    {
 
 
-      Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao = '0' or Situacao = '4' ) "+
-                              " order by id ")
+//     Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao = '0' or Situacao = '4' ) "+
+//     " order by id ")
+       Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao_proc = '0'  ) "+
+       " order by id ")
+
+
+
+                              
 
 //  Get3 = await pool.query("select id, Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from Processos Where Situacao = '0' "+
 //  " and Exists( Select * from processos_produtos where processos_produtos.id=processos.id ) order by id limit 10")
@@ -260,7 +266,8 @@ const updateProcesso_Phoenix = (request, response) => {
   const np = parseInt( request.params.np )   // numero do processo no Phoenix
 
     pool.query(
-        'update Processos set Situacao = $1, processo_phoenix = $2 where id = $3',
+//      'update Processos set Situacao = $1, processo_phoenix = $2 where id = $3',
+        'update Processos set Situacao_proc = $1, processo_phoenix = $2 where id = $3',
         [ st , np , id],
         (error) => {
             if (error) {
