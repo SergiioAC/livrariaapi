@@ -41,7 +41,7 @@ const getProcessos_Phoenix = async (request, response) =>
 
 //     Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao = '0' or Situacao = '4' ) "+
 //     " order by id ")
-       Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao_proc = '0'  ) "+
+       Get3 = await pool.query("select id, id_original , processo_phoenix , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao_proc = '0'  ) "+
        " order by id ")
 
 
