@@ -152,15 +152,12 @@ const getProcessos_Produtos = async (request, response) =>
 
        Get3 = await pool.query("select id, seq , codigo , quantidade , valorunitario , instalacao , opcionais , frete , proposta from processos_produtos "+
        " order by id ")
-
-
-
-                              
+                           
 
 //      const Get3Str  = JSON.stringify( Get3 );
 //      const Get3Json = JSON.parse( Get3Str );
 //      const aNovo    = JSON.stringify( Get3Json.rows[zFor] )
-      const aNovo   = JSON.stringify( Get3 );
+      aNovo   = JSON.stringify( Get3 );
   
 
    }     
