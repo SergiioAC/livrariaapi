@@ -142,6 +142,44 @@ module.exports.getProcessos_Phoenix = getProcessos_Phoenix;
 //============================================================================================
 
 
+
+const getProcessos_Produtos = async (request, response) => 
+{
+    let aNovo = ''
+
+    try
+   {
+
+       Get3 = await pool.query("select id, seq , codigo , quantidade , valorunitario , instalacao , opcionais , frete , proposta from processos_produtos ) "+
+       " order by id ")
+
+
+
+                              
+
+//      const Get3Str  = JSON.stringify( Get3 );
+//      const Get3Json = JSON.parse( Get3Str );
+//      const aNovo    = JSON.stringify( Get3Json.rows[zFor] )
+      const aNovo   = JSON.stringify( Get3 );
+  
+
+   }     
+   catch(error) {
+                  return response.status(401).json({status: 'error',message: 'Erro ao recuperar os Processos: ' +error });
+                }     
+              response.status(200).send( aNovo )
+}
+
+
+module.exports.getProcessos_Produtos = getProcessos_Produtos;
+
+
+//============================================================================================
+
+
+
+
+
 const addProcesso = async (request, response) => 
 {
    const Ins3 = []
