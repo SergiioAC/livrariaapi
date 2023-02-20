@@ -150,7 +150,7 @@ const getProcessos_Produtos = async (request, response) =>
     try
    {
 
-       Get3 = await pool.query("select id, seq , codigo , quantidade , valorunitario , instalacao , opcionais , frete , proposta from processos_produtos ) "+
+       Get3 = await pool.query("select id, seq , codigo , quantidade , valorunitario , instalacao , opcionais , frete , proposta from processos_produtos "+
        " order by id ")
 
 
