@@ -41,7 +41,7 @@ const getProcessos_Phoenix = async (request, response) =>
 
 //     Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao = '0' or Situacao = '4' ) "+
 //     " order by id ")
-       Get3 = await pool.query("select id, id_original , processo_phoenix , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao_proc = '0'  ) "+
+       Get3 = await pool.query("select id, id_original , processo_phoenix , situacao , DataPrevista , DataDaOcorrencia , Log , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao_proc = '0'  ) "+
        " order by id ")
 
 
@@ -183,13 +183,13 @@ const addProcesso = async (request, response) =>
    let  Id2  = 0
    try
    {
-       const { id_original , NumeroDoProcesso , Situacao , Arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
+       const { id_original , NumeroDoProcesso , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
        let Ins3 = await pool.query
            (
-              'insert into Processos( id_original , numerodoprocesso, Situacao , Arquivo , id_entrada , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Situacao_Proc) '+
-              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 ) RETURNING id '
+              'insert into Processos( id_original , numerodoprocesso, Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , id_entrada , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Situacao_Proc) '+
+              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23 , $24 ) RETURNING id '
               ,
-              [ id_original , NumeroDoProcesso , Situacao , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
+              [ id_original , NumeroDoProcesso , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
            )
 //,
 //        (error,res) => {
