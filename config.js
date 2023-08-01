@@ -32,8 +32,8 @@ const {Pool} = require('pg')
 
 // Heroku
 
-const pool = new Pool({ connectionString
-    //connectionString: isProduction ? process.env.DATABASE_URL: connectionString
+const pool = new Pool({ //connectionString
+    connectionString: isProduction ? process.env.DATABASE_URL: connectionString
     // descomentar para fazer deploy no heroku
     //29/07/23 comentei as 3 linhas abaixo - Para o Heroku, as 3 linhas abaixo dvem estar dscomentadas
     , ssl: {
