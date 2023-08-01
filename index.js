@@ -5,10 +5,6 @@ const moment = require('moment')
 //const bodyParser = require('body-parser')
 //const morgan = require('morgan')
 
-
-
-
-
 const app = express()
 
 app.use(express.json())
@@ -22,6 +18,7 @@ app.use(cors())
 const controleEditora = require('./controladores/editoras')
 const controleLivro = require('./controladores/livros')
 const controleProcesso = require('./controladores/processos')
+const controlePedido   = require('./controladores/pedidos')
 
 app
     .route('/editoras')
@@ -52,18 +49,15 @@ app
     .post(controleProcesso.addProcesso)
     .put(controleProcesso.updateProcesso)
 
-app
-    .route('/WebHooks')
-    .post(controleProcesso.addProcesso_WebHooks)
 
-    app
+app
     .route('/processos_Phoenix')
     .get(controleProcesso.getProcessos_Phoenix)
 //    .put(controleProcesso.updateProcesso_Phoenix)
 
 app
-.route('/processos_Produtos')
-.get(controleProcesso.getProcessos_Produtos)
+    .route('/processos_Produtos')
+    .get(controleProcesso.getProcessos_Produtos)
 
 app
     .route('/processos_Update_Phoenix/:id,:st,:np')
@@ -75,6 +69,41 @@ app
     .get(controleProcesso.getProcessoPorCodigo)
     .delete(controleProcesso.deleteProcesso)    
 
+//--------------------------------------------------------------
+
+app
+.route('/WebHooks')
+.post(controleProcesso.addProcesso_WebHooks)
+
+
+//--------------------------------------------------------------
+app
+.route('/pedidos')
+.get(controlePedido.getPedidos)
+.post(controlePedido.addPedido)
+.put(controlePedido.updatePedido)
+
+
+app
+.route('/pedidos_Phoenix')
+.get(controlePedido.getPedidos_Phoenix)
+
+app
+.route('/pedidos_Produtos')
+.get(controlePedido.getPedidos_Produtos)
+
+app
+.route('/pedidos_Update_Phoenix/:id,:st,:np')
+.put(controlePedido.updatePedido_Phoenix)
+
+app
+.route('/pedidos/:codigo')
+.get(controlePedido.getPedidoPorCodigo)
+.delete(controlePedido.deletePedido)
+
+    
+
+
     
 //app.post('/webhook-client', async(req, res) => {
 //    console.log('Inside Callback hook', req.body)
@@ -83,7 +112,9 @@ app
 //    return res.status(200).end();
 //});
         
+//29/07/23 
 app.listen(process.env.PORT || 3002, () => {
+//app.listen( 3002, () => {
 
 //    const mdata = '2022-01-31';
 //    const mtime = '08:12 PM';
