@@ -255,7 +255,7 @@ const updatePedido_Phoenix = (request, response) => {
   const np = parseInt( request.params.np )   // numero do pedido no Phoenix
 
     pool.query(
-        'update Pedidos set Situacao_Proc = $1, pedido_phoenix = $2 where id = $3',
+        'update Pedidos_cab set Situacao_Proc = $1, pedido_phoenix = $2 where id = $3',
         [ st , np , id],
         (error) => {
             if (error) {
