@@ -207,16 +207,16 @@ const getPedidos_Phoenix = async (request, response) =>
         const Get4Json = JSON.parse( Get4Str );
 
         Get5 = await pool.query("Select ID_Prod,CodigoDoProduto,Descricao,Quantidade,ValorUnitario,Instalacao,Opcionais,Frete from Pedidos_Produtos Where id = $1 order by ID_Prod",[ Get3Json.rows[zFor].id ] )
-        const Get5Str  = JSON.stringify( Get5 );
-        const Get5Json = JSON.parse( Get5Str );
+        var Get5Str  = JSON.stringify( Get5 );
+        var Get5Json = JSON.parse( Get5Str );
         for (let zFor2 = 0 ; zFor < Get5Json.rows.length ; zFor2++ )
         {
             Get6 = await pool.query("Select Codigo,Valor Pedidos_Caracteristicas Where id = $1 and id_prod = $2 order by Sequencial", [ Get3Json.rows[zFor].id , Get5Json.rows[zFor2].id ] )
             const Get6Str  = JSON.stringify( Get6 );
             //const Get6Json = JSON.parse( Get6Str );
 
-            const Get5Str  = JSON.stringify( Get5 );
-            const Get5Json = JSON.parse( Get5Str + '",caracteristicas": '+ Get6Str );
+            const Get5Str  = JSON.stringify( Get5Json );
+            let Get5Json = JSON.parse( Get5Str + '",caracteristicas": '+ Get6Str );
     
         }     
         const aNovo3 = JSON.stringify( Get3Json.rows[zFor] )
