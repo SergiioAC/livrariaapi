@@ -113,8 +113,8 @@ app
 //});
         
 //20/08/23 
-//app.listen(process.env.PORT || 3002, () => {
-app.listen( 3002, () => {
+app.listen(process.env.PORT || 3002, () => {
+//app.listen( 3002, () => {
 
 //    const mdata = '2022-01-31';
 //    const mtime = '08:12 PM';
