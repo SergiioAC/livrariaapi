@@ -20,7 +20,8 @@ const {Pool} = require('pg')
 
 //10/01/23const connectionString = 'postgres://qlpkhvlz:YN9u6TIS3U8q1SwaWdqwJo86x9uBM1kZ@kesavan.db.elephantsql.com/qlpkhvlz' // <- Para produção comentar essa linha
 
-// desabilitado em 01/08/23 const connectionString = `postgresql://postgres:123@localhost:5432/phoenix`  //29/07/23
+// desabilitado em 01/08/23 
+////20/08/23 const connectionString = `postgresql://postgres:123@localhost:5432/phoenix`  //29/07/23
 
 
 
@@ -35,7 +36,7 @@ const {Pool} = require('pg')
 const pool = new Pool({ //connectionString
     connectionString: isProduction ? process.env.DATABASE_URL: connectionString
     // descomentar para fazer deploy no heroku
-    //29/07/23 comentei as 3 linhas abaixo - Para o Heroku, as 3 linhas abaixo dvem estar dscomentadas
+    //20/08/23 comentei as 3 linhas abaixo - Para o Heroku, as 3 linhas abaixo dvem estar dscomentadas
     , ssl: {
                rejectUnauthorized: false,
            }
