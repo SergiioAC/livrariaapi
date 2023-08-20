@@ -215,7 +215,7 @@ const getPedidos_Phoenix = async (request, response) =>
             const Get6Str  = JSON.stringify( Get6 );
             //const Get6Json = JSON.parse( Get6Str );
 
-            const Get5Str  = JSON.stringify( Get5Json );
+            let Get5Str  = JSON.stringify( Get5Json );
             let Get5Json = JSON.parse( Get5Str + '",caracteristicas": '+ Get6Str );
     
         }     
