@@ -188,33 +188,94 @@ module.exports.updatePedido = updatePedido;
 
 const getPedidos_Phoenix = async (request, response) => 
 {
-    let aNovo = ''
 
+    let aNovo    = ''
+    let Get5Str  = ''
+    let Get5Json = []
+    
     try
    {
 
        Get3 = await pool.query("select id, numero_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento from pedidos_cab Where ( Situacao_proc = '0'  ) "+
        " order by id ")
 
-
-
        const Get3Str  = JSON.stringify( Get3 );
+       //console.log('100-'+Get5Str);
+
+       // Processando um pedido
        const Get3Json = JSON.parse( Get3Str );
        for (let zFor = 0 ; zFor < Get3Json.rows.length ; zFor++ )
        {
+        //console.log('111-'+Get5Str);
+
         Get4 = await pool.query("Select Sequencial,Valor,Vencimento from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get3Json.rows[zFor].id ] )
         const Get4Str  = JSON.stringify( Get4 );
         const Get4Json = JSON.parse( Get4Str );
 
         Get5 = await pool.query("Select ID_Prod,CodigoDoProduto,Descricao,Quantidade,ValorUnitario,Instalacao,Opcionais,Frete from Pedidos_Produtos Where id = $1 order by ID_Prod",[ Get3Json.rows[zFor].id ] )
-        const Get5Str  = JSON.stringify( Get5 );
-        const Get5Json = JSON.parse( Get5Str );
+        Get5Str  = JSON.stringify( Get5 );
+        Get5Json = JSON.parse( Get5Str );
+        //console.log('=============================================================0');
+        //console.log(Get5Str);
+        //console.log(Get5Str);
+        //console.log('=============================================================1');
+
+        //console.log(Get3Json.rows[0].id         );
+        //console.log('=============================================================1.1/2');
+
+        let aNovo5   = ''
+
+        for (let zFor2 = 0 ; zFor2 < Get5Json.rows.length ; zFor2++ )
+        {
+
+            //console.log(Get3Json.rows[zFor].id    );
+            //console.log(Get5Json.rows[zFor2].id_prod    );
+
+            //console.log('=============================================================2');
+            //console.log(zFor);
+            //console.log('=============================================================3');
+            //console.log(Get3Str);
+            //console.log('===**********************==========================================================4');
+
+            Get6 = await pool.query("Select codigo,valor from Pedidos_Caracteristicas Where id = $1 and id_prod = $2 order by Sequencial",[ Get3Json.rows[zFor].id , Get5Json.rows[zFor2].id_prod ] )
+            const Get6Str  = JSON.stringify( Get6 );
+            const Get6Json = JSON.parse( Get6Str );
+            //console.log(Get6Str);
+            //console.log('===**********************==========================================================5');
+//            Get5Str = Get5Str + '"Caracteristicas": '+Get6Str;
+
+              const aNovo6 = JSON.stringify( Get6Json.rows        );
+              const aNovoP = JSON.stringify( Get5Json.rows[zFor2] );
+
+              //console.log('===novoP')
+              //console.log( aNovoP.substring( 0 , aNovoP.length - 1 ))
+              //console.log('===novo6');
+              //console.log(aNovo6)
+              //console.log('===novo5');
+              if (aNovo5 === '')
+              {
+                 aNovo5  = aNovo5 + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '}' )
+              }
+              else   
+              {
+                 aNovo5  = aNovo5 + ',' + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '} ] }' )
+              }
+
+              //console.log(aNovo5)
+              //console.log('===');
+
+              //console.log(Get5Str);
+            //console.log('===**********************==========================================================6');
+          //  Get5Json = JSON.parse( Get5Str );
+
+     
+        }
 
         const aNovo3 = JSON.stringify( Get3Json.rows[zFor] )
         const aNovo4 = JSON.stringify( Get4Json.rows )
-        const aNovo5 = JSON.stringify( Get5Json.rows )
+    //    const aNovo5 = JSON.stringify( Get5Json.rows )
  
-        aNovo  = aNovo + ( aNovo3.substring( 0 , aNovo3.length - 1 ) + ',"Titulos":'+aNovo4+ ',"produto":'+aNovo5+'}' )
+        aNovo  = aNovo + ( aNovo3.substring( 0 , aNovo3.length - 1 ) + ',"Titulos":'+aNovo4+ ',"produto":['+aNovo5+']}' )
 
        }
  
