@@ -252,15 +252,22 @@ const getPedidos_Phoenix = async (request, response) =>
               //console.log('===novo6');
               //console.log(aNovo6)
               //console.log('===novo5');
-              if (aNovo5 === '')
+              if ( aNovo6 === '[a]' )
               {
-                 aNovo5  = aNovo5 + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '}' )
+                aNovo5  = aNovo5 + aNovoP // .substring( 0 , aNovoP.length - 1 )  '}' )
               }
-              else   
+              else
               {
-                 aNovo5  = aNovo5 + ',' + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '} ] }' )
+                 if ( aNovo5 === '' )
+                 {
+                    aNovo5  = aNovo5 + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '}' )
+                 }
+                 else   
+                 {
+//                  aNovo5  = aNovo5 + ',' + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '} ] }' )
+                    aNovo5  = aNovo5 + ',' + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '} ' )
+                 }
               }
-
               //console.log(aNovo5)
               //console.log('===');
 

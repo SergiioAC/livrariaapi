@@ -13,14 +13,25 @@ const {Pool} = require('pg')
 //const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
 
 // Habilitar p/ Heroku
-//29/07/23 const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`
+//29/07/23  Habilite em 23/08/23 para o Heroku...
+
+
+
+/// Essa linha precisa para o HEROKU
+///const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`
+
+
+
 
 //const connectionString = 'postgres://frngxudyyfvaxb:9823002c34b57b4daca5d0245ef3bd4fce5dfd92bcd2ffeb430575944a785034@ec2-44-209-24-62.compute-1.amazonaws.com:5432/d3im7u02qpgk60'
 
 //10/01/23const connectionString = 'postgres://qlpkhvlz:YN9u6TIS3U8q1SwaWdqwJo86x9uBM1kZ@kesavan.db.elephantsql.com/qlpkhvlz' // <- Para produção comentar essa linha
 
 // desabilitado em 01/08/23 
-////20/08/23 const connectionString = `postgresql://postgres:123@localhost:5432/phoenix`  //29/07/23
+
+/// Essa linha precisa para o LOCALHOST
+////20/08/23 
+const connectionString = `postgresql://postgres:123@localhost:5432/phoenix`  //29/07/23
 
 
 
@@ -30,15 +41,15 @@ const {Pool} = require('pg')
 //  console.log( connectionString )
 
 
-// Heroku
+
 
 const pool = new Pool({ //connectionString
     connectionString: isProduction ? process.env.DATABASE_URL: connectionString
     // descomentar para fazer deploy no heroku
     //20/08/23 comentei as 3 linhas abaixo - Para o Heroku, as 3 linhas abaixo dvem estar dscomentadas
-    , ssl: {
-               rejectUnauthorized: false,
-           }
+    ///, ssl: {
+    ///           rejectUnauthorized: false,
+    ///       }
     })
 
 
