@@ -4,7 +4,7 @@ const { request, response } = require("express");
 //============================================================================================
 
 const getPedidos = (request, response) => {
-    pool.query("select id, Numero_Phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambas from Pedidos_Cab order by id", (error, results) => {
+    pool.query("select id, Numero_Phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos from Pedidos_Cab order by id", (error, results) => {
         if (error) {
             return response.status(401).json({status: 'error', 
             message: 'Erro ao recuperar os Pedidos: ' + error});
@@ -75,7 +75,7 @@ const addPedido = async (request, response) =>
                TipoDeFinanciamento,
                Observacao_Pedido,
                Observacao_Producao,
-               Observacao_Ambas,
+               Observacao_Ambos,
                Produtos
               } = request.body
 
@@ -83,11 +83,11 @@ const addPedido = async (request, response) =>
    
 
    (
-'insert into pedidos_cab( ProcessoCRM , IndicadorDeInscricaoEstadual ,  InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambas,Situacao_Proc ) '+
+'insert into pedidos_cab( ProcessoCRM , IndicadorDeInscricaoEstadual ,  InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos,Situacao_Proc ) '+
 'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35 , $36 , $37 , $38 , $39 , $40 , $41 , $42 , $43 , $44 , $45 , $46 , $47  , $48 , $49 , $50 ) RETURNING id '
 ,
 //            [ id_original , NumeroDoPedido , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
-              [ ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento ,Observacao_Pedido,Observacao_Producao,Observacao_Ambas, '0' ]
+              [ ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento ,Observacao_Pedido,Observacao_Producao,Observacao_Ambos, '0' ]
            )
         if (Ins3.rows[0] )
            {
@@ -201,7 +201,7 @@ const getPedidos_Phoenix = async (request, response) =>
     try
    {
 
-       Get3 = await pool.query("select id, numero_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambas from pedidos_cab Where ( Situacao_proc = '0'  ) "+
+       Get3 = await pool.query("select id, numero_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos from pedidos_cab Where ( Situacao_proc = '0'  ) "+
        " order by id ")
 
        const Get3Str  = JSON.stringify( Get3 );
