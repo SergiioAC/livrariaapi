@@ -2,6 +2,7 @@ const { pool } = require("../config");
 const { request, response } = require("express");
 // const webhooks = require('node-webhooks');
 
+let vcodcli = 12
 
 //============================================================================================
 
@@ -33,6 +34,9 @@ module.exports.getProcessos = getProcessos;
 
 const getProcessos_Phoenix = async (request, response) => 
 {
+ 
+    const id_cliente = request.params.id_cliente    
+
     let aNovo = ''
 
     try
@@ -41,8 +45,8 @@ const getProcessos_Phoenix = async (request, response) =>
 
 //     Get3 = await pool.query("select id, id_original , situacao , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao = '0' or Situacao = '4' ) "+
 //     " order by id ")
-       Get3 = await pool.query("select id, id_original , processo_phoenix , situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where ( Situacao_proc = '0'  ) "+
-       " order by id ")
+       Get3 = await pool.query("select id, id_original , processo_phoenix , situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem from processos Where id_cliente =  $1 and Situacao_proc = '0'  "+
+       " order by id " , [id_cliente])
 
 
 
@@ -183,13 +187,48 @@ const addProcesso = async (request, response) =>
    let  Id2  = 0
    try
    {
-       const { id_original , NumeroDoProcesso , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Produtos } = request.body
+       const { id_cliente , 
+               id_original , 
+               NumeroDoProcesso , 
+               Situacao , 
+               DataPrevista , 
+               DataDaOcorrencia , 
+               MensagemDeLog , 
+               Arquivo , 
+               Nome, 
+               Email, 
+               Cpf_Cnpj, 
+               ddi , 
+               ddd , 
+               Telefone, 
+               Cep, 
+               Cidade, 
+               Uf,
+               assunto, 
+               id_Segmento, 
+               id_Produto  , 
+               criacao , 
+               id_origem , 
+               mensagem , 
+               Produtos } = request.body
+
+               let vid_cliente = 0
+               if (!id_cliente)
+               {
+                 vid_cliente = 362
+               }
+               else
+               {
+                 vid_cliente=id_cliente
+               }
+ 
        let Ins3 = await pool.query
            (
-              'insert into Processos( id_original , numerodoprocesso, Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , id_entrada , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Situacao_Proc) '+
-              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23 , $24 ) RETURNING id '
+              'insert into Processos( id_cliente , id_original , numerodoprocesso, Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , id_entrada ,'+
+                                     'Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto  , criacao , id_origem , mensagem , Situacao_Proc) '+
+              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23 , $24 , $25 ) RETURNING id '
               ,
-              [ id_original , NumeroDoProcesso , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
+              [ vid_cliente , id_original , NumeroDoProcesso , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
            )
 //,
 //        (error,res) => {
@@ -293,16 +332,18 @@ module.exports.addProcesso_WebHooks = addProcesso_WebHooks;
 //============================================================================================
 
 const updateProcesso_Phoenix = (request, response) => {
+
 //    const { id } = request.body
 //    const { st } = request.body
     
-  const id = parseInt( request.params.id )    
-  const st = parseInt( request.params.st )    
-  const np = parseInt( request.params.np )   // numero do processo no Phoenix
+  const vCodigoDoCliente = parseInt( request.params.cc )      
+  const id               = parseInt( request.params.id )      
+  const st               = parseInt( request.params.st )    
+  const np               = parseInt( request.params.np )   // numero do processo no Phoenix
 
     pool.query(
 //      'update Processos set Situacao = $1, processo_phoenix = $2 where id = $3',
-        'update Processos set Situacao_Proc = $1, processo_phoenix = $2 where id = $3',
+        'update Processos set Situacao_Proc = $1, processo_phoenix = $2 where CodigoDoCliente = vCodigoDoCliente and id = $3',
         [ st , np , id],
         (error) => {
             if (error) {

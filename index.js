@@ -51,7 +51,7 @@ app
 
 
 app
-    .route('/processos_Phoenix')
+    .route('/processos_Phoenix/:id_cliente')
     .get(controleProcesso.getProcessos_Phoenix)
 //    .put(controleProcesso.updateProcesso_Phoenix)
 
@@ -60,7 +60,7 @@ app
     .get(controleProcesso.getProcessos_Produtos)
 
 app
-    .route('/processos_Update_Phoenix/:id,:st,:np')
+    .route('/processos_Update_Phoenix/:id_cliente,:id,:st,:np')
   //  .get(controleProcesso.getProcessos_Phoenix)
     .put(controleProcesso.updateProcesso_Phoenix)
 
@@ -85,7 +85,7 @@ app
 
 
 app
-.route('/pedidos_Phoenix')
+.route('/pedidos_Phoenix/:id_cliente')
 .get(controlePedido.getPedidos_Phoenix)
 
 app
@@ -93,7 +93,7 @@ app
 .get(controlePedido.getPedidos_Produtos)
 
 app
-.route('/pedidos_Update_Phoenix/:id,:st,:np')
+.route('/pedidos_Update_Phoenix/:id_cliente,:id,:st,:np')
 .put(controlePedido.updatePedido_Phoenix)
 
 app
@@ -113,8 +113,8 @@ app
 //});
         
 //20/08/23 
-app.listen(process.env.PORT || 3002, () => {
-//app.listen( 3002, () => {
+//app.listen(process.env.PORT || 3002, () => {
+app.listen( 3002, () => {
 
 //    const mdata = '2022-01-31';
 //    const mtime = '08:12 PM';
