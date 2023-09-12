@@ -336,15 +336,15 @@ const updateProcesso_Phoenix = (request, response) => {
 //    const { id } = request.body
 //    const { st } = request.body
     
-  const vCodigoDoCliente = parseInt( request.params.cc )      
-  const id               = parseInt( request.params.id )      
-  const st               = parseInt( request.params.st )    
-  const np               = parseInt( request.params.np )   // numero do processo no Phoenix
+  const id_cliente       = parseInt( request.params.id_cliente )      
+  const id               = parseInt( request.params.id         )      
+  const st               = parseInt( request.params.st         )      
+  const np               = parseInt( request.params.np         )    // numero do processo no Phoenix
 
     pool.query(
 //      'update Processos set Situacao = $1, processo_phoenix = $2 where id = $3',
-        'update Processos set Situacao_Proc = $1, processo_phoenix = $2 where CodigoDoCliente = vCodigoDoCliente and id = $3',
-        [ st , np , id],
+        'update Processos set Situacao_Proc = $1, processo_phoenix = $2 where CodigoDoCliente = $4 and id = $3',
+        [ st , np , id , id_cliente ],
         (error) => {
             if (error) {
                 return response.status(401).json({ status: 'error', 

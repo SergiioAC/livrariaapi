@@ -399,10 +399,10 @@ module.exports.getPedidos_Produtos = getPedidos_Produtos;
 
 const updatePedido_Phoenix = (request, response) => {
     
-    const id_Cliente = parseInt( request.params.id_cliente )    
+    const id_cliente = parseInt( request.params.id_cliente )    
     const id         = parseInt( request.params.id         )    
     const st         = parseInt( request.params.st         )    
-  const np           = parseInt( request.params.np         )   // numero do pedido no Phoenix
+    const np         = parseInt( request.params.np         )   // numero do pedido no Phoenix
 
     pool.query(
         'update Pedidos_cab set Situacao_Proc = $1, pedido_phoenix = $2 where id_cliente = $4 and id = $3',
