@@ -273,7 +273,7 @@ const getPedidos_Phoenix = async (request, response) =>
                                       "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,"+
                                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,"+
                                       "FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,"+
-                                      "Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
+                                      "Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
                                       "Observacao_Ambos,Observacao_Cliente,Finalizado from pedidos_cab Where id_cliente = $1 and  Situacao_proc = '0' "+
 //                                      "Observacao_Ambos,Observacao_Cliente from pedidos_cab Where  Situacao_proc = '0' "+
        " order by id " , [id_cliente] )
