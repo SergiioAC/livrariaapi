@@ -158,8 +158,8 @@ if (Titulos) {
               {
                   const Prods = pool.query
                   (
-                   'insert into Pedidos_Titulos ( ID,Sequencial,Tipo,Valor,Vencimento,TipoDeTitulo,GerarBoleto ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 ) ',
-                    [ Ins3.rows[0]['id'] , zFor+1 , 'P' , aTitulos[ zFor ].Valor , aTitulos[ zFor ].Vencimento, aTitulos[ zFor ].TipoDeTitulo, aTitulos[ zFor ].GerarBoleto ],
+                   'insert into Pedidos_Titulos ( ID,Sequencial,Tipo,Valor,Vencimento,TipoDeTitulo,FormaDePagto ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 ) ',
+                    [ Ins3.rows[0]['id'] , zFor+1 , 'P' , aTitulos[ zFor ].Valor , aTitulos[ zFor ].Vencimento, aTitulos[ zFor ].TipoDeTitulo, aTitulos[ zFor ].FormaDePagto ],
                   )
               }
                   // Fim dos titulos do adiantamento
@@ -289,7 +289,7 @@ const getPedidos_Phoenix = async (request, response) =>
        {
         //console.log('111-'+Get5Str);
 
-        Get4 = await pool.query("Select Sequencial,Valor,Vencimento,TipoDeTitulo,GerarBoleto from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get3Json.rows[zFor].id ] )
+        Get4 = await pool.query("Select Sequencial,Valor,Vencimento,TipoDeTitulo,FormaDePagto from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get3Json.rows[zFor].id ] )
         const Get4Str  = JSON.stringify( Get4 );
         const Get4Json = JSON.parse( Get4Str );
 
