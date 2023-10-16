@@ -7,7 +7,7 @@ const getPedidos = (request, response) => {
     pool.query("select id, Numero_Phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
                       "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,"+
                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,"+
-                      "UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBase,CondicaoDePagamentoFat,"+
+                      "UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,"+
                       "TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,"+
                       "ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado from Pedidos_Cab order by id", 
                       (error, results) => {
@@ -81,7 +81,7 @@ const addPedido = async (request, response) =>
                Ent_Estado,
                Ent_Cep,
                TipoDeTitulo,
-               DataBase,
+               DataBasePed,
                CondicaoDePagamentoFat,
                TipoDeDistribuicaoFat,
                DistribuicaoFat,
@@ -134,7 +134,7 @@ const addPedido = async (request, response) =>
                          'DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,EntregaMaxima,PedidoDoCliente,'+
                          'Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,FretePorConta,OperadorLeasing,'+
                          'Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,'+
-                         'TipoDeTitulo,DataBase,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado,Situacao_Proc ) '+
+                         'TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado,Situacao_Proc ) '+
 'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23, $24, $25, $26, $27, $28, $29, $30,'+
         ' $31, $32, $33, $34, $35 , $36 , $37 , $38 , $39 , $40 , $41 , $42 , $43 , $44 , $45 , $46 , $47  , $48 , $49 , $50 , $51 , $52 , $53 , $54 , $55 , $56 , $57 , $58 , $59 , $60 , $61 , $62 ) RETURNING id '
 
@@ -143,7 +143,7 @@ const addPedido = async (request, response) =>
               [ vid_cliente , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,
                 EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,
                 Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,
-                Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBase,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento ,Observacao_Pedido,
+                Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento ,Observacao_Pedido,
                 Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado, '0' ]
            )
 
@@ -276,7 +276,7 @@ const getPedidos_Phoenix = async (request, response) =>
                                       "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,"+
                                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,"+
                                       "FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,"+
-                                      "Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBase,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
+                                      "Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
                                       "Observacao_Ambos,Observacao_Cliente,Finalizado from pedidos_cab Where id_cliente = $1 and  Situacao_proc = '0' "+
 //                                      "Observacao_Ambos,Observacao_Cliente from pedidos_cab Where  Situacao_proc = '0' "+
        " order by id " , [id_cliente] )
