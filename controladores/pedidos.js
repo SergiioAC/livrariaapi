@@ -272,6 +272,7 @@ const getPedidos_Phoenix = async (request, response) =>
     //console.log('OK1222'  );
     //console.log('OK1222'+id_cliente  );
 
+    
        Get3 = await pool.query("select id, numero_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
                                       "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,"+
                                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,"+
