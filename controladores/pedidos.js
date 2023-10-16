@@ -5,9 +5,9 @@ const { request, response } = require("express");
 
 const getPedidos = (request, response) => {
     pool.query("select id, Numero_Phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
-                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,"+
+                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,"+
                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,"+
-                      "UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,"+
+                      "UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBase,CondicaoDePagamentoFat,"+
                       "TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,"+
                       "ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado from Pedidos_Cab order by id", 
                       (error, results) => {
@@ -49,6 +49,7 @@ const addPedido = async (request, response) =>
                DDD,
                Telefone,
                Atividade,
+               Regiao,
                EmailComercial,
                EmailCobranca,
                EmailNFe,
@@ -79,6 +80,8 @@ const addPedido = async (request, response) =>
                Ent_Cidade,
                Ent_Estado,
                Ent_Cep,
+               TipoDeTitulo,
+               DataBase,
                CondicaoDePagamentoFat,
                TipoDeDistribuicaoFat,
                DistribuicaoFat,
@@ -128,19 +131,19 @@ const addPedido = async (request, response) =>
    
    (
 'insert into pedidos_cab( id_cliente,ProcessoCRM , IndicadorDeInscricaoEstadual ,  InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,'+
-                         'DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,EntregaMaxima,PedidoDoCliente,'+
+                         'DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,EntregaMaxima,PedidoDoCliente,'+
                          'Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,FretePorConta,OperadorLeasing,'+
                          'Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,'+
-                         'CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado,Situacao_Proc ) '+
+                         'TipoDeTitulo,DataBase,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado,Situacao_Proc ) '+
 'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23, $24, $25, $26, $27, $28, $29, $30,'+
-        ' $31, $32, $33, $34, $35 , $36 , $37 , $38 , $39 , $40 , $41 , $42 , $43 , $44 , $45 , $46 , $47  , $48 , $49 , $50 , $51 , $52 , $53 , $54 , $55 , $56 , $57 , $58 , $59 ) RETURNING id '
+        ' $31, $32, $33, $34, $35 , $36 , $37 , $38 , $39 , $40 , $41 , $42 , $43 , $44 , $45 , $46 , $47  , $48 , $49 , $50 , $51 , $52 , $53 , $54 , $55 , $56 , $57 , $58 , $59 , $60 , $61 , $62 ) RETURNING id '
 
 ,
 //            [ id_cliente ,  id_original , NumeroDoPedido , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
-              [ vid_cliente , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,
+              [ vid_cliente , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,
                 EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,
                 Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,
-                Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento ,Observacao_Pedido,
+                Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBase,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento ,Observacao_Pedido,
                 Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado, '0' ]
            )
 
@@ -158,8 +161,8 @@ if (Titulos) {
               {
                   const Prods = pool.query
                   (
-                   'insert into Pedidos_Titulos ( ID,Sequencial,Tipo,Valor,Vencimento,TipoDeTitulo,FormaDePagto ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 ) ',
-                    [ Ins3.rows[0]['id'] , zFor+1 , 'P' , aTitulos[ zFor ].Valor , aTitulos[ zFor ].Vencimento, aTitulos[ zFor ].TipoDeTitulo, aTitulos[ zFor ].FormaDePagto ],
+                   'insert into Pedidos_Titulos ( ID,Sequencial,Tipo,Valor,Vencimento,FormaDePagto ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 ) ',
+                    [ Ins3.rows[0]['id'] , zFor+1 , 'P' , aTitulos[ zFor ].Valor , aTitulos[ zFor ].Vencimento, aTitulos[ zFor ].FormaDePagto ],
                   )
               }
                   // Fim dos titulos do adiantamento
@@ -270,10 +273,10 @@ const getPedidos_Phoenix = async (request, response) =>
     //console.log('OK1222'+id_cliente  );
 
        Get3 = await pool.query("select id, numero_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
-                                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,"+
+                                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,"+
                                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,"+
                                       "FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,"+
-                                      "Ent_Cidade,Ent_Estado,Ent_Cep,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
+                                      "Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBase,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
                                       "Observacao_Ambos,Observacao_Cliente,Finalizado from pedidos_cab Where id_cliente = $1 and  Situacao_proc = '0' "+
 //                                      "Observacao_Ambos,Observacao_Cliente from pedidos_cab Where  Situacao_proc = '0' "+
        " order by id " , [id_cliente] )
@@ -289,7 +292,7 @@ const getPedidos_Phoenix = async (request, response) =>
        {
         //console.log('111-'+Get5Str);
 
-        Get4 = await pool.query("Select Sequencial,Valor,Vencimento,TipoDeTitulo,FormaDePagto from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get3Json.rows[zFor].id ] )
+        Get4 = await pool.query("Select Sequencial,Valor,Vencimento,FormaDePagto from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get3Json.rows[zFor].id ] )
         const Get4Str  = JSON.stringify( Get4 );
         const Get4Json = JSON.parse( Get4Str );
 
