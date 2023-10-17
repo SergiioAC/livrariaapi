@@ -161,7 +161,7 @@ if (Titulos) {
               {
                   const Prods = pool.query
                   (
-                   'insert into Pedidos_Titulos ( ID,Sequencial,Tipo,Valor,Vencimento,FormaDePagto ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 ) ',
+                   'insert into Pedidos_Titulos ( ID,Sequencial,Tipo,Valor,Vencimento,FormaDePagto ) values ( $1, $2, $3 , $4 , $5 , $6 ) ',
                     [ Ins3.rows[0]['id'] , zFor+1 , 'P' , aTitulos[ zFor ].Valor , aTitulos[ zFor ].Vencimento, aTitulos[ zFor ].FormaDePagto ],
                   )
               }
@@ -272,13 +272,13 @@ const getPedidos_Phoenix = async (request, response) =>
     //console.log('OK1222'  );
     //console.log('OK1222'+id_cliente  );
 
-    
+
        Get3 = await pool.query("select id, numero_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
                                       "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,"+
                                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,"+
                                       "FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,"+
                                       "Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
-                                      "Observacao_Ambos,Observacao_Cliente,Finalizado from pedidos_cab Where id_cliente = $1 and  Situacao_proc = '0' "+
+                                      "Observacao_Ambos,Observacao_Cliente,Finalizado from pedidos_cab Where id_cliente = $1 and Situacao_proc = '0' "+
 //                                      "Observacao_Ambos,Observacao_Cliente from pedidos_cab Where  Situacao_proc = '0' "+
        " order by id " , [id_cliente] )
 
