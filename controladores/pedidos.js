@@ -322,7 +322,7 @@ const getPedidos_Phoenix = async (request, response) =>
             //console.log(Get3Str);
             //console.log('===**********************==========================================================4');
 
-            Get6 = await pool.query("Select codigo,valor,Cpl,Cpsl from Pedidos_Caracteristicas Where id = $1 and id_prod = $2 order by Sequencial",[ Get3Json.rows[zFor].id , Get5Json.rows[zFor2].id_prod ] )
+            Get6 = await pool.query("Select codigo,valor,Cpl,Cpsl from Pedidos_Caracteristicas Where id = $1 and id_prod = $2 order by Cpl ",[ Get3Json.rows[zFor].id , Get5Json.rows[zFor2].id_prod ] )
             const Get6Str  = JSON.stringify( Get6 );
             const Get6Json = JSON.parse( Get6Str );
             //console.log(Get6Str);
