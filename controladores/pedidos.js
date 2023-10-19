@@ -191,8 +191,8 @@ if (Titulos) {
                   {
                      const Prods = pool.query
                      (
-                      'insert into Pedidos_Caracteristicas ( ID,ID_Prod,Sequencial, Codigo,Valor,Cpl,Cpsl ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 ) ',
-                       [ Ins3.rows[0]['id'] , zFor+1  , zFor2+1 , aCaracs[ zFor2 ].Codigo , aCaracs[ zFor2 ].Valor  , aCaracs[ zFor2 ].Cpl ,  , aCaracs[ zFor2 ].Cpsl ],
+                      'insert into Pedidos_Caracteristicas ( ID,ID_Prod, Codigo,Valor,Cpl,Cpsl ) values ( $1, $2, $3 , $4 , $5 , $6 ) ',
+                       [ Ins3.rows[0]['id'] , zFor+1  , aCaracs[ zFor2 ].Codigo , aCaracs[ zFor2 ].Valor  , aCaracs[ zFor2 ].Cpl , aCaracs[ zFor2 ].Cpsl ],
                      )
                   } 
 
