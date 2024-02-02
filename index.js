@@ -98,7 +98,7 @@ app
 
 app
 .route('/pedidos/:pID')
-.get(controlePedido.getPedidoPorCodigo)
+.get(controlePedido.getPedidoPorID)
 .delete(controlePedido.deletePedido)
 
     
