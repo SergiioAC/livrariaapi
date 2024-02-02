@@ -273,7 +273,7 @@ const getPedidos_Phoenix = async (request, response) =>
     //console.log('OK1222'+id_cliente  );
 
 
-       Get3 = await pool.query("select id, numero_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
+       Get3 = await pool.query("select id, pedido_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
                                       "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,"+
                                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,"+
                                       "FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,"+
@@ -445,6 +445,25 @@ const getPedidoPorCodigo = (request, response) => {
             if (error || results.rowCount == 0) {
                 return response.status(401).json({ status: 'error', 
                 message: 'Não foi possível recuperar o Pedido: ' + error });
+            }
+            response.status(201).json(results.rows)
+        }        
+    )
+}
+module.exports.getPedidoPorCodigo = getPedidoPorCodigo;
+
+
+const getPedidoPorId = (request, response) => {
+
+    const pID = parseInt(request.params.pID)    
+
+    pool.query(
+        'select pedido_phoenix from Pedidos_cab where ID = $1 ',
+        [pID],
+        (error, results) => {
+            if (error || results.rowCount == 0) {
+                return response.status(401).json({ status: 'error', 
+                message: 'Pedido não encontrado : ' + error });
             }
             response.status(201).json(results.rows)
         }        

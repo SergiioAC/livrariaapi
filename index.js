@@ -97,7 +97,7 @@ app
 .put(controlePedido.updatePedido_Phoenix)
 
 app
-.route('/pedidos/:codigo')
+.route('/pedidos/:pID')
 .get(controlePedido.getPedidoPorCodigo)
 .delete(controlePedido.deletePedido)
 
