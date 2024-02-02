@@ -453,7 +453,7 @@ const getPedidoPorCodigo = (request, response) => {
 module.exports.getPedidoPorCodigo = getPedidoPorCodigo;
 
 
-const getPedidoPorId = (request, response) => {
+const getPedidoPorID = (request, response) => {
 
     const pID = parseInt(request.params.pID)    
 
@@ -469,7 +469,7 @@ const getPedidoPorId = (request, response) => {
         }        
     )
 }
-module.exports.getPedidoPorCodigo = getPedidoPorCodigo;
+module.exports.getPedidoPorID = getPedidoPorID;
 
 
 
