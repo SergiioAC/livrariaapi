@@ -110,21 +110,21 @@ const addPedido = async (request, response) =>
               {
                 vid_cliente=id_cliente
               }
-              console.log('OK2-->'+vid_cliente+'<--' )
+         //     console.log('OK2-->'+vid_cliente+'<--' )
 /*
               if (id_cliente)
               {
                 vid_cliente = 19
               }
               
-              console.log('OK3-->'+id_cliente+'<--' )
+           //   console.log('OK3-->'+id_cliente+'<--' )
 
               if (!id_cliente)
               {
                 vid_cliente = 19
               }
               
-              console.log('OK4-->'+id_cliente+'<--' )
+           //   console.log('OK4-->'+id_cliente+'<--' )
 
 */
 
@@ -266,7 +266,7 @@ const addPedido = async (request, response) =>
                  '0' ]
            )
 
-           console.log('OK3')
+       //    console.log('OK3')
 
            if (Ins3.rows[0] )
            {
