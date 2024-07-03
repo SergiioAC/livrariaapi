@@ -5,7 +5,7 @@ const { request, response } = require("express");
 
 const getPedidos = (request, response) => {
     pool.query("select id, Numero_Phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
-                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,"+
+                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,TelComercial,TelCobranca,Emissao,Entrega,"+
                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,"+
                       "UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,"+
                       "TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,"+
@@ -55,6 +55,8 @@ const addPedido = async (request, response) =>
                EmailNFe,
                ContatoComercial,
                ContatoCobranca,
+               TelComercial,
+               TelCobranca,
                Emissao,
                Entrega,
                NaoFaturarAntes,
@@ -97,7 +99,7 @@ const addPedido = async (request, response) =>
                Produtos
               } = request.body
 
-        //      console.log('OK1-->'+id_cliente+'<--' )
+          //    console.log('OK1-->'+id_cliente+'<--' )
               
               let vid_cliente = 0
               if (!id_cliente)
@@ -108,7 +110,7 @@ const addPedido = async (request, response) =>
               {
                 vid_cliente=id_cliente
               }
-        //      console.log('OK2-->'+vid_cliente+'<--' )
+              console.log('OK2-->'+vid_cliente+'<--' )
 /*
               if (id_cliente)
               {
@@ -127,27 +129,144 @@ const addPedido = async (request, response) =>
 */
 
    let Ins3 = await pool.query
-   
-   
-   (
-'insert into pedidos_cab( id_cliente,ProcessoCRM , IndicadorDeInscricaoEstadual ,  InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,'+
-                         'DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,EntregaMaxima,PedidoDoCliente,'+
-                         'Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,FretePorConta,OperadorLeasing,'+
-                         'Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,'+
-                         'TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado,Situacao_Proc ) '+
-'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23, $24, $25, $26, $27, $28, $29, $30,'+
-        ' $31, $32, $33, $34, $35 , $36 , $37 , $38 , $39 , $40 , $41 , $42 , $43 , $44 , $45 , $46 , $47  , $48 , $49 , $50 , $51 , $52 , $53 , $54 , $55 , $56 , $57 , $58 , $59 , $60 , $61 , $62 ) RETURNING id '
-
+              (
+              'insert into pedidos_cab(  id_cliente,'+
+                                        'ProcessoCRM ,'+ 
+                                        'IndicadorDeInscricaoEstadual ,'+  
+                                        'InscricaoEstadual ,'+ 
+                                        'Cnpj,'+
+                                        'Nome,'+
+                                        'Fantasia,'+
+                                        'Endereco,'+
+                                        'Numero,'+
+                                        'Complemento,'+
+                                        'Bairro,'+
+                                        'Cidade,'+
+                                        'Estado,'+
+                                        'Cep,'+
+                                        'DDD,'+
+                                        'Telefone,'+
+                                        'Atividade,'+
+                                        'Regiao,'+
+                                        'EmailComercial,'+
+                                        'EmailCobranca,'+
+                                        'EmailNFe,'+
+                                        'ContatoComercial,'+
+                                        'ContatoCobranca,'+
+                                        'TelComercial,'+
+                                        'TelCobranca,'+
+                                        'Emissao,'+
+                                        'Entrega,'+
+                                        'NaoFaturarAntes,'+
+                                        'EntregaMaxima,'+
+                                        'PedidoDoCliente,'+
+                                        'Vendedor,'+
+                                        'AgenteDeVenda,'+
+                                        'AgenteDeVenda2,'+
+                                        'Instalador,'+
+                                        'AbatimentoNaComissao1,'+
+                                        'AbatimentoNaComissao2,'+
+                                        'Transportadora,'+
+                                        'FretePorConta,'+
+                                        'OperadorLeasing,'+
+                                        'Distribuidora,'+
+                                        'UsoDaMercadoria,'+
+                                        'Ent_MesmoEndereco,'+
+                                        'Ent_Cnpj,'+
+                                        'Ent_Endereco,'+
+                                        'Ent_Numero,'+
+                                        'Ent_Complemento,'+
+                                        'Ent_Bairro,'+
+                                        'Ent_Cidade,'+
+                                        'Ent_Estado,'+
+                                        'Ent_Cep,'+
+                                        'TipoDeTitulo,'+
+                                        'DataBasePed,'+
+                                        'CondicaoDePagamentoFat,'+
+                                        'TipoDeDistribuicaoFat,'+
+                                        'DistribuicaoFat,'+
+                                        'ObservacaoFat,'+
+                                        'ValorFinanciado,'+
+                                        'TipoDeFinanciamento,'+
+                                        'Observacao_Pedido,'+
+                                        'Observacao_Producao,'+
+                                        'Observacao_Ambos,'+
+                                        'Observacao_Cliente,'+
+                                        'Finalizado,'+
+                                        'Situacao_Proc'+
+                                        ') '+
+              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23, $24, $25, $26, $27, $28, $29, $30,'+
+                      ' $31, $32, $33, $34, $35 , $36 , $37 , $38 , $39 , $40 , $41 , $42 , $43 , $44 , $45 , $46 , $47  , $48 , $49 , $50 , $51 , $52 , $53 , $54 , $55 , $56 , $57 , $58 , $59 , $60 , $61 , $62  , $63 , $64   ) RETURNING id '
+              
 ,
 //            [ id_cliente ,  id_original , NumeroDoPedido , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
-              [ vid_cliente , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,
-                EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,
-                Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,
-                Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento ,Observacao_Pedido,
-                Observacao_Producao,Observacao_Ambos,Observacao_Cliente,Finalizado, '0' ]
+              [ vid_cliente , 
+                ProcessoCRM , 
+                IndicadorDeInscricaoEstadual , 
+                InscricaoEstadual , 
+                Cnpj,
+                Nome,
+                Fantasia,
+                Endereco,
+                Numero,
+                Complemento,
+                Bairro,
+                Cidade,
+                Estado,
+                Cep,
+                DDD,
+                Telefone,
+                Atividade,
+                Regiao,
+                EmailComercial,
+                EmailCobranca,
+                EmailNFe,
+                ContatoComercial,
+                ContatoCobranca,
+                TelComercial,
+                TelCobranca,
+                Emissao,
+                Entrega,
+                NaoFaturarAntes,
+                EntregaMaxima,
+                PedidoDoCliente,
+                Vendedor,
+                AgenteDeVenda,
+                AgenteDeVenda2,
+                Instalador,
+                AbatimentoNaComissao1,
+                AbatimentoNaComissao2,
+                Transportadora,
+                FretePorConta,
+                OperadorLeasing,
+                Distribuidora,
+                UsoDaMercadoria,
+                Ent_MesmoEndereco,
+                Ent_Cnpj,
+                Ent_Endereco,
+                Ent_Numero,
+                Ent_Complemento,
+                Ent_Bairro,
+                Ent_Cidade,
+                Ent_Estado,
+                Ent_Cep,
+                TipoDeTitulo,
+                DataBasePed,
+                CondicaoDePagamentoFat,
+                TipoDeDistribuicaoFat,
+                DistribuicaoFat,
+                ObservacaoFat,
+                ValorFinanciado,
+                TipoDeFinanciamento,
+                Observacao_Pedido,
+                Observacao_Producao,
+                Observacao_Ambos,
+                Observacao_Cliente,
+                Finalizado,
+                 '0' ]
            )
 
-           //console.log('OK2')
+           console.log('OK3')
 
            if (Ins3.rows[0] )
            {
@@ -179,8 +298,8 @@ if (Titulos) {
               {
                   const Prods = pool.query
                   (
-                   'insert into Pedidos_produtos ( ID,ID_Prod,CodigoDoProduto,Descricao,Quantidade,ValorUnitario,Instalacao,Opcionais,Frete ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 ) ',
-                    [ Ins3.rows[0]['id'] , zFor+1 ,aProdutos[ zFor ].CodigoDoProduto, aProdutos[ zFor ].Descricao, aProdutos[ zFor ].Quantidade, aProdutos[ zFor ].ValorUnitario, aProdutos[ zFor ].Instalacao, aProdutos[ zFor ].Opcionais, aProdutos[ zFor ].Frete  ],
+                   'insert into Pedidos_produtos ( ID,ID_Prod,CodigoDoProduto,Descricao,Quantidade,QualEstoque,ValorUnitario,Instalacao,Opcionais,Frete ) values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10) ',
+                    [ Ins3.rows[0]['id'] , zFor+1 ,aProdutos[ zFor ].CodigoDoProduto, aProdutos[ zFor ].Descricao, aProdutos[ zFor ].Quantidade, aProdutos[ zFor ].QualEstoque,aProdutos[ zFor ].ValorUnitario, aProdutos[ zFor ].Instalacao, aProdutos[ zFor ].Opcionais, aProdutos[ zFor ].Frete  ],
                   )
                   if (aProdutos[ zFor ].Caracteristicas) {
                   // Gravação das caracteristicas
@@ -196,10 +315,34 @@ if (Titulos) {
                      )
                   } 
 
-                 // Fim da gravação das caracteristicas
+                 // Fim da gravação das caracteristicas 
                 }
+                // Datas de entrega
 
+                if (aProdutos[ zFor ].Entregas) {
+                    // Gravação das entregas
 
+//                    console.log('Entregas 1 -->'+id_cliente+'<--' )
+
+                    const jsEntregas = JSON.stringify( aProdutos[ zFor ].Entregas );
+                    const aEntregas  = JSON.parse( jsEntregas );
+     
+//                    console.log('Entregas 2 -->'+id_cliente+'<--' )
+                    for ( let zFor2 = 0 ; zFor2 < aEntregas.length ; zFor2++ )
+                    {
+   
+//                      console.log('Entregas 3 -->'+id_cliente+'<--' )
+                        const Ents = pool.query
+                       (
+                        'insert into Pedidos_Entregas ( ID , ID_Prod , Quantidade , DataDeEntrega ) values ( $1, $2, $3 , $4 ) ',
+//                       [ Ins3.rows[0]['id'] , zFor+1  , aEntregas[ zFor2 ].Quantidade , aEntregas[ zFor2 ].DataDeEntrega   ],
+                         [ Ins3.rows[0]['id'] , zFor+1  , aEntregas[ zFor2 ].Quantidade , aEntregas[ zFor2 ].DataDeEntrega.substring( 4 )+ aEntregas[ zFor2 ].DataDeEntrega.substring( 2 , 4 )+ aEntregas[ zFor2 ].DataDeEntrega.substring( 0 , 2 )  ],
+)
+                    } 
+                   // Fim da gravação das entregas   .substring( 0 , umProduto_Str.length - 1 )
+                  }
+  
+  
 
               }
 
@@ -261,20 +404,20 @@ const getPedidos_Phoenix = async (request, response) =>
 
  //console.log('OK0000->'+id_cliente+'<---'  );
 
+ //console.log('OK12223'  );
 
-    let aNovo    = ''
-    let Get5Str  = ''
-    let Get5Json = []
+    let todosOsPedidos_Json    = ''
+    let Get_ProdutoStr  = ''
+    let Get_ProdutoJson = []
     
     try
    {
 
-    //console.log('OK1222'  );
-    //console.log('OK1222'+id_cliente  );
+   // console.log('OK12ewe22'+id_cliente  );
 
 
-       Get3 = await pool.query("select id, pedido_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
-                                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,Emissao,Entrega,NaoFaturarAntes,"+
+       Get_Pedido = await pool.query("select id, pedido_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
+                                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,TelComercial,TelCobranca,Emissao,Entrega,NaoFaturarAntes,"+
                                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,"+
                                       "FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,"+
                                       "Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
@@ -284,91 +427,145 @@ const getPedidos_Phoenix = async (request, response) =>
 
 
     
-       const Get3Str  = JSON.stringify( Get3 );
-       //console.log('100-'+Get5Str);
+       const Get_PedidoStr  = JSON.stringify( Get_Pedido );
+       //console.log('100-'+Get_ProdutoStr);
 
        // Processando um pedido
-       const Get3Json = JSON.parse( Get3Str );
-       for (let zFor = 0 ; zFor < Get3Json.rows.length ; zFor++ )
+       const Get_PedidoJson = JSON.parse( Get_PedidoStr );
+       for (let zFor = 0 ; zFor < Get_PedidoJson.rows.length ; zFor++ )
        {
-        //console.log('111-'+Get5Str);
+        //console.log('111-'+Get_ProdutoStr);
 
-        Get4 = await pool.query("Select Sequencial,Valor,Vencimento,FormaDePagto from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get3Json.rows[zFor].id ] )
-        const Get4Str  = JSON.stringify( Get4 );
-        const Get4Json = JSON.parse( Get4Str );
+        Get_Titulos = await pool.query("Select Sequencial,Valor,Vencimento,FormaDePagto from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get_PedidoJson.rows[zFor].id ] )
+        const Get_TitulosStr  = JSON.stringify( Get_Titulos );
+        const Get_TitulosJson = JSON.parse( Get_TitulosStr );
 
-        Get5 = await pool.query("Select ID_Prod,CodigoDoProduto,Descricao,Quantidade,ValorUnitario,Instalacao,Opcionais,Frete from Pedidos_Produtos Where id = $1 order by ID_Prod",[ Get3Json.rows[zFor].id ] )
-        Get5Str  = JSON.stringify( Get5 );
-        Get5Json = JSON.parse( Get5Str );
+        Get_Produto = await pool.query("Select ID_Prod,CodigoDoProduto,Descricao,Quantidade,QualEstoque,ValorUnitario,Instalacao,Opcionais,Frete from Pedidos_Produtos Where id = $1 order by ID_Prod",[ Get_PedidoJson.rows[zFor].id ] )
+        Get_ProdutoStr  = JSON.stringify( Get_Produto );
+        Get_ProdutoJson = JSON.parse( Get_ProdutoStr );
         //console.log('=============================================================0');
-        //console.log(Get5Str);
-        //console.log(Get5Str);
+        //console.log(Get_ProdutoStr);
+        //console.log(Get_ProdutoStr);
         //console.log('=============================================================1');
 
-        //console.log(Get3Json.rows[0].id         );
+        //console.log(Get_PedidoJson.rows[0].id         );
         //console.log('=============================================================1.1/2');
 
-        let aNovo5   = ''
-
-        for (let zFor2 = 0 ; zFor2 < Get5Json.rows.length ; zFor2++ )
+        let jsonDosProdutos   = ''
+        for (let zFor2 = 0 ; zFor2 < Get_ProdutoJson.rows.length ; zFor2++ )
         {
 
-            //console.log(Get3Json.rows[zFor].id    );
-            //console.log(Get5Json.rows[zFor2].id_prod    );
+            const umProduto_Str = JSON.stringify( Get_ProdutoJson.rows[zFor2] );
+            let umProduto_Sai = '';
 
-            //console.log('=============================================================2');
-            //console.log(zFor);
-            //console.log('=============================================================3');
-            //console.log(Get3Str);
-            //console.log('===**********************==========================================================4');
+            // Entregas
+            Get_Entregas = await pool.query("Select quantidade,datadeentrega from Pedidos_Entregas Where id = $1 and id_prod = $2 order by datadeentrega ",[ Get_PedidoJson.rows[zFor].id , Get_ProdutoJson.rows[zFor2].id_prod ] )
+            const Get_EntregasStr  = JSON.stringify( Get_Entregas );
+            // console.log('1 -> '+Get_EntregasStr);
+            const Get_EntregasJson = JSON.parse( Get_EntregasStr );
+            // console.log('2 -> '+Get_EntregasJson);
+            const entregas_Str = JSON.stringify( Get_EntregasJson.rows        );
+            // console.log('3 -> '+entregas_Str);
 
-            Get6 = await pool.query("Select codigo,valor,Cpl,Cpsl from Pedidos_Caracteristicas Where id = $1 and id_prod = $2 order by Cpl ",[ Get3Json.rows[zFor].id , Get5Json.rows[zFor2].id_prod ] )
+                /*    
+            if ( entregas_Str === '[a]' )
+            {
+                jsonDosProdutos  = jsonDosProdutos + umProduto_Str // .substring( 0 , umProduto_Str.length - 1 )  '}' )
+            }
+            else
+            {
+                if ( jsonDosProdutos === '' )
+                {
+                   jsonDosProdutos  = jsonDosProdutos + ( umProduto_Str.substring( 0 , umProduto_Str.length - 1 ) + ',"Entregas":'+entregas_Str + '}' )
+                }
+                else   
+                {
+//                 jsonDosProdutos  = jsonDosProdutos + ',' + ( umProduto_Str.substring( 0 , umProduto_Str.length - 1 ) + ',"Caracteristicas":'+entregas_Str + '} ] }' )
+                   jsonDosProdutos  = jsonDosProdutos + ',' + ( umProduto_Str.substring( 0 , umProduto_Str.length - 1 ) + ',"Entregas":'+entregas_Str + '} ' )
+                }
+                */   
+
+
+                if ( entregas_Str !== '[a]' )
+                   {
+                    umProduto_Sai = umProduto_Sai + umProduto_Str.substring( 0 , umProduto_Str.length - 1 ) + ',"Entregas":'+entregas_Str ; // + '}';
+                   }
+
+
+
+                   // }
+            // Fim das entregas
+
+
+            // Caracteristicas
+            Get6 = await pool.query("Select codigo,valor,Cpl,Cpsl from Pedidos_Caracteristicas Where id = $1 and id_prod = $2 order by Cpl ",[ Get_PedidoJson.rows[zFor].id , Get_ProdutoJson.rows[zFor2].id_prod ] )
             const Get6Str  = JSON.stringify( Get6 );
             const Get6Json = JSON.parse( Get6Str );
-            //console.log(Get6Str);
-            //console.log('===**********************==========================================================5');
-//            Get5Str = Get5Str + '"Caracteristicas": '+Get6Str;
 
-              const aNovo6 = JSON.stringify( Get6Json.rows        );
-              const aNovoP = JSON.stringify( Get5Json.rows[zFor2] );
+            const caracteristicas_Str = JSON.stringify( Get6Json.rows        );
+            const caracteristicas_Json = JSON.stringify( Get_ProdutoJson.rows[zFor2] );
+            /*
+            if ( caracteristicas_Str === '[a]' )
+            {
+                jsonDosProdutos  = jsonDosProdutos + caracteristicas_Json // .substring( 0 , caracteristicas_Json.length - 1 )  '}' )
+            }
+            else
+            {
+                if ( jsonDosProdutos === '' )
+                {
+                   jsonDosProdutos  = jsonDosProdutos + ( caracteristicas_Json.substring( 0 , caracteristicas_Json.length - 1 ) + ',"Caracteristicas":'+caracteristicas_Str + '}' )
+                }
+                else   
+                {
+//                 jsonDosProdutos  = jsonDosProdutos + ',' + ( caracteristicas_Json.substring( 0 , caracteristicas_Json.length - 1 ) + ',"Caracteristicas":'+caracteristicas_Str + '} ] }' )
+                   jsonDosProdutos  = jsonDosProdutos + ',' + ( caracteristicas_Json.substring( 0 , caracteristicas_Json.length - 1 ) + ',"Caracteristicas":'+caracteristicas_Str + '} ' )
+                }
+            }
+            */
+            if ( caracteristicas_Str !== '[a]' )
+            {
+                if ( umProduto_Sai === '' )
+                {    
+                    umProduto_Sai = umProduto_Str.substring( 0 , umProduto_Str.length - 1 ) + ',"Caracteristicas":'+caracteristicas_Str ; // + '}';
+                }
+                else
+                {
+                    umProduto_Sai = umProduto_Sai + ',"Caracteristicas":'+caracteristicas_Str + '}';
+                }  //( umProduto_Str.substring( 0 , umProduto_Str.length - 1 ) + 
+            }           
+            
+        //console.log(Get_ProdutoStr);
 
-              //console.log('===novoP')
-              //console.log( aNovoP.substring( 0 , aNovoP.length - 1 ))
-              //console.log('===novo6');
-              //console.log(aNovo6)
-              //console.log('===novo5');
-              if ( aNovo6 === '[a]' )
-              {
-                aNovo5  = aNovo5 + aNovoP // .substring( 0 , aNovoP.length - 1 )  '}' )
-              }
-              else
-              {
-                 if ( aNovo5 === '' )
-                 {
-                    aNovo5  = aNovo5 + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '}' )
-                 }
-                 else   
-                 {
-//                  aNovo5  = aNovo5 + ',' + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '} ] }' )
-                    aNovo5  = aNovo5 + ',' + ( aNovoP.substring( 0 , aNovoP.length - 1 ) + ',"Caracteristicas":'+aNovo6 + '} ' )
-                 }
-              }
-              //console.log(aNovo5)
-              //console.log('===');
+            // Fim das caracteristica
 
-              //console.log(Get5Str);
-            //console.log('===**********************==========================================================6');
-          //  Get5Json = JSON.parse( Get5Str );
+                // Fechando o produto
+                umProduto_Sai = umProduto_Sai +  '}';
 
-     
+            if ( jsonDosProdutos === '' )
+             {
+                jsonDosProdutos  = jsonDosProdutos + umProduto_Sai.substring( 0 , umProduto_Sai.length - 1 ) ;
+             }
+             else   
+             {
+                jsonDosProdutos  = jsonDosProdutos + ','+ umProduto_Sai.substring( 0 , umProduto_Sai.length - 1 ) ;
+             }
+
+
         }
 
-        const aNovo3 = JSON.stringify( Get3Json.rows[zFor] )
-        const aNovo4 = JSON.stringify( Get4Json.rows )
-    //    const aNovo5 = JSON.stringify( Get5Json.rows )
+           const jsonDoPedido = JSON.stringify( Get_PedidoJson.rows[zFor] )
+           const jsonDosTitulos = JSON.stringify( Get_TitulosJson.rows )
+    //     const jsonDosProdutos = JSON.stringify( Get_ProdutoJson.rows )
  
-        aNovo  = aNovo + ( aNovo3.substring( 0 , aNovo3.length - 1 ) + ',"Titulos":'+aNovo4+ ',"produto":['+aNovo5+']}' )
-
+          if ( todosOsPedidos_Json === '' )
+          {
+              todosOsPedidos_Json  = todosOsPedidos_Json + ( jsonDoPedido.substring( 0 , jsonDoPedido.length - 1 ) + ',"Titulos":'+jsonDosTitulos+ ',"produto":['+jsonDosProdutos+']}' );
+          }
+          else
+          {
+              todosOsPedidos_Json  = todosOsPedidos_Json + '' + ( jsonDoPedido.substring( 0 , jsonDoPedido.length - 1 ) + ',"Titulos":'+jsonDosTitulos+ ',"produto":['+jsonDosProdutos+']}' );
+          } // Não tem virgula separando os pedidos porque são Json separados.
+    
        }
  
 
@@ -376,7 +573,7 @@ const getPedidos_Phoenix = async (request, response) =>
    catch(error) {
                   return response.status(401).json({status: 'error',message: 'Erro ao recuperar os Pedidos: ' +error });
                 }     
-              response.status(200).send( aNovo )
+              response.status(200).send( todosOsPedidos_Json )
 }
 module.exports.getPedidos_Phoenix = getPedidos_Phoenix;
 
@@ -386,20 +583,20 @@ module.exports.getPedidos_Phoenix = getPedidos_Phoenix;
 
 const getPedidos_Produtos = async (request, response) => 
 {
-    let aNovo = ''
+    let todosOsPedidos_Json = ''
 
     try
    {
 
-       Get3 = await pool.query("select id, seq , codigo , quantidade , valorunitario , instalacao , opcionais , frete , proposta from pedidos_produtos "+
+       Get_Pedido = await pool.query("select id, seq , codigo , quantidade , valorunitario , instalacao , opcionais , frete , proposta from pedidos_produtos "+
        " order by id ")
-      aNovo   = JSON.stringify( Get3 );
+      todosOsPedidos_Json   = JSON.stringify( Get_Pedido );
 
    }     
    catch(error) {
                   return response.status(401).json({status: 'error',message: 'Erro ao recuperar os Pedidos: ' +error });
                 }     
-              response.status(200).send( aNovo )
+              response.status(200).send( todosOsPedidos_Json )
 }
 module.exports.getPedidos_Produtos = getPedidos_Produtos;
 

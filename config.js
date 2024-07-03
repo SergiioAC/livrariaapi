@@ -20,10 +20,10 @@ const {Pool} = require('pg')
 ///Apnas mudar Esses dois comandos e mais o SSL para mudar de ambiente ( Em 10/09 )
 ///apaguei em 10/09 
 //const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`   // Habilitada para o Heroku , desabilitada para Localhost
-/// essa de baixo é que é a correta
-  const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`   // Habilitada para o Heroku , desabilitada para Localhost
-/// Essa linha precisa para o LOCALHOST liberei linha abaixo em 10/09          
-//const connectionString = `postgresql://postgres:123@localhost:5432/phoenix`                                                                 // Desabilitada para o Heroku , Habilitada para Localhost
+/// essa de baixo é que é a correta para o Heroku -- Comentar para localhost 19/06/24
+//  const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`   // Habilitada para o Heroku , desabilitada para Localhost
+/// Essa linha precisa para o LOCALHOST liberei linha abaixo em 19/06/24
+  const connectionString = `postgresql://postgres:123@localhost:5432/phoenix`                                                                 // Desabilitada para o Heroku , Habilitada para Localhost
 
 
 
@@ -48,10 +48,10 @@ const {Pool} = require('pg')
 const pool = new Pool({ //connectionString
     connectionString: isProduction ? process.env.DATABASE_URL: connectionString
     // descomentar para fazer deploy no heroku
-    //20/08/23 comentei as 3 linhas abaixo - Para o Heroku, as 3 linhas abaixo dvem estar dscomentadas
-    , ssl: {
-               rejectUnauthorized: false,
-           }
+    //20/08/23 comentei as 3 linhas abaixo para o localhost - Para o Heroku, as 3 linhas abaixo dvem estar dscomentadas
+    //, ssl: {
+    //           rejectUnauthorized: false,
+    //       }
     })
 
 
