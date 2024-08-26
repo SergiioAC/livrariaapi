@@ -26,7 +26,7 @@ const {Pool} = require('pg')
   
 
 // Nessa região apenas essa linha de baixo muda  ( Habiilita p/ local ou desabilita p/ Heroku)
- const connectionString = `postgresql://postgres:123@localhost:5432/phoenix`            // Desabilitada para o Heroku , Habilitada para Localhost
+ //const connectionString = `postgresql://postgres:123@localhost:5432/phoenix`            // Desabilitada para o Heroku , Habilitada para Localhost
 
 
 
@@ -52,9 +52,9 @@ const pool = new Pool({ //connectionString
     connectionString: isProduction ? process.env.DATABASE_URL: connectionString
     // descomentar para fazer deploy no heroku
     //20/08/23 comentei as 3 linhas abaixo para o localhost - Para o Heroku, as 3 linhas abaixo dvem estar dscomentadas
-    //, ssl: {
-    //           rejectUnauthorized: false,
-    //       }
+    , ssl: {
+               rejectUnauthorized: false,
+           }
     })
 
 
