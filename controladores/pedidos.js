@@ -5,7 +5,7 @@ const { request, response } = require("express");
 
 const getPedidos = (request, response) => {
     pool.query("select id, Numero_Phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
-                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,TelComercial,TelCobranca,Emissao,Entrega,"+
+                      "Bairro,Cidade,Estado,Cep,DDD1,Telefone1,TelDesc1,DDD2,Telefone2,TelDesc2,DDD3,Telefone3,TelDesc3,DDD4,Telefone4,TelDesc4,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,TelComercial,TelCobranca,Emissao,Entrega,"+
                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,Transportadora,FretePorConta,OperadorLeasing,Distribuidora,"+
                       "UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,"+
                       "TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,"+
@@ -46,8 +46,18 @@ const addPedido = async (request, response) =>
                Cidade,
                Estado,
                Cep,
-               DDD,
-               Telefone,
+               DDD1,
+               Telefone1,
+               TelDesc1,
+               DDD2,
+               Telefone2,
+               TelDesc2,
+               DDD3,
+               Telefone3,
+               TelDesc3,
+               DDD4,
+               Telefone4,
+               TelDesc4,
                Atividade,
                Regiao,
                EmailComercial,
@@ -110,7 +120,7 @@ const addPedido = async (request, response) =>
               {
                 vid_cliente=id_cliente
               }
-         //     console.log('OK2-->'+vid_cliente+'<--' )
+    //          console.log('OK2-->'+vid_cliente+'<--' )
 /*
               if (id_cliente)
               {
@@ -144,8 +154,18 @@ const addPedido = async (request, response) =>
                                         'Cidade,'+
                                         'Estado,'+
                                         'Cep,'+
-                                        'DDD,'+
-                                        'Telefone,'+
+                                        'DDD1,'+
+                                        'Telefone1,'+
+                                        'TelDesc1,'+
+                                        'DDD2,'+
+                                        'Telefone2,'+
+                                        'TelDesc2,'+
+                                        'DDD3,'+
+                                        'Telefone3,'+
+                                        'TelDesc3,'+
+                                        'DDD4,'+
+                                        'Telefone4,'+
+                                        'TelDesc4,'+
                                         'Atividade,'+
                                         'Regiao,'+
                                         'EmailComercial,'+
@@ -195,9 +215,10 @@ const addPedido = async (request, response) =>
                                         'Finalizado,'+
                                         'Situacao_Proc'+
                                         ') '+
-              'values ( $1, $2, $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18  , $19 , $20  , $21 , $22 , $23, $24, $25, $26, $27, $28, $29, $30,'+
-                      ' $31, $32, $33, $34, $35 , $36 , $37 , $38 , $39 , $40 , $41 , $42 , $43 , $44 , $45 , $46 , $47  , $48 , $49 , $50 , $51 , $52 , $53 , $54 , $55 , $56 , $57 , $58 , $59 , $60 , $61 , $62  , $63 , $64   ) RETURNING id '
-              
+              'values (  $1,  $2,  $3 , $4 , $5 ,  $6 ,  $7 ,  $8 ,  $9 , $10 , $11 , $12 , $13 , $14 , $15 , $16 , $17 , $18 , $19 , $20 , $21 , $22 , $23 , $24,  $25 , $26 , $27 , $28 , $29 , $30 ,'+
+                      ' $31, $32, $33, $34, $35 , $36 , $37 , $38 , $39 , $40 , $41 , $42 , $43 , $44 , $45 , $46 , $47 , $48 , $49 , $50 , $51 , $52 , $53 , $54 , $55 , $56 , $57 , $58 , $59 , $60 , $61 , $62  , $63 , $64  , $65  , $66  , $67  , $68  , $69  , $70  , $71  , $72  , $73  , $74  ) RETURNING id '
+                                           
+
 ,
 //            [ id_cliente ,  id_original , NumeroDoPedido , Situacao , DataPrevista , DataDaOcorrencia , MensagemDeLog , Arquivo , 0 , Nome, Email, Cpf_Cnpj, ddi , ddd , Telefone, Cep, Cidade, Uf, assunto, id_Segmento, id_Produto , criacao , id_origem , mensagem , '0' ]
               [ vid_cliente , 
@@ -214,8 +235,18 @@ const addPedido = async (request, response) =>
                 Cidade,
                 Estado,
                 Cep,
-                DDD,
-                Telefone,
+                DDD1,
+                Telefone1,
+                TelDesc1,
+                DDD2,
+                Telefone2,
+                TelDesc2,
+                DDD3,
+                Telefone3,
+                TelDesc3,
+                DDD4,
+                Telefone4,
+                TelDesc4,
                 Atividade,
                 Regiao,
                 EmailComercial,
@@ -267,6 +298,7 @@ const addPedido = async (request, response) =>
            )
 
        //    console.log('OK3')
+      // console.log('OK3-->'+vid_cliente+'<--' )
 
            if (Ins3.rows[0] )
            {
@@ -417,7 +449,7 @@ const getPedidos_Phoenix = async (request, response) =>
 
 
        Get_Pedido = await pool.query("select id, pedido_phoenix , ProcessoCRM , IndicadorDeInscricaoEstadual , InscricaoEstadual , Cnpj,Nome,Fantasia,Endereco,Numero,Complemento,"+
-                                      "Bairro,Cidade,Estado,Cep,DDD,Telefone,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,TelComercial,TelCobranca,Emissao,Entrega,NaoFaturarAntes,"+
+                                      "Bairro,Cidade,Estado,Cep,DDD1,Telefone1,TelDesc1,DDD2,Telefone2,TelDesc2,DDD3,Telefone3,TelDesc3,DDD4,Telefone4,TelDesc4,Atividade,Regiao,EmailComercial,EmailCobranca,EmailNFe,ContatoComercial,ContatoCobranca,TelComercial,TelCobranca,Emissao,Entrega,NaoFaturarAntes,"+
                                       "EntregaMaxima,PedidoDoCliente,Vendedor,AgenteDeVenda,AgenteDeVenda2,Instalador,AbatimentoNaComissao1,AbatimentoNaComissao2,Transportadora,"+
                                       "FretePorConta,OperadorLeasing,Distribuidora,UsoDaMercadoria,Ent_MesmoEndereco,Ent_Cnpj,Ent_Endereco,Ent_Numero,Ent_Complemento,Ent_Bairro,"+
                                       "Ent_Cidade,Ent_Estado,Ent_Cep,TipoDeTitulo,DataBasePed,CondicaoDePagamentoFat,TipoDeDistribuicaoFat,DistribuicaoFat,ObservacaoFat,ValorFinanciado,TipoDeFinanciamento,Observacao_Pedido,Observacao_Producao,"+
@@ -426,7 +458,7 @@ const getPedidos_Phoenix = async (request, response) =>
        " order by id " , [id_cliente] )
 
 
-    
+                                                                         
        const Get_PedidoStr  = JSON.stringify( Get_Pedido );
        //console.log('100-'+Get_ProdutoStr);
 
@@ -434,7 +466,7 @@ const getPedidos_Phoenix = async (request, response) =>
        const Get_PedidoJson = JSON.parse( Get_PedidoStr );
        for (let zFor = 0 ; zFor < Get_PedidoJson.rows.length ; zFor++ )
        {
-        //console.log('111-'+Get_ProdutoStr);
+        console.log('111-'+Get_ProdutoStr);
 
         Get_Titulos = await pool.query("Select Sequencial,Valor,Vencimento,FormaDePagto from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get_PedidoJson.rows[zFor].id ] )
         const Get_TitulosStr  = JSON.stringify( Get_Titulos );
