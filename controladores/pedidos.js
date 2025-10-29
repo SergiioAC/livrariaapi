@@ -21,6 +21,17 @@ const getPedidos = (request, response) => {
 module.exports.getPedidos = getPedidos;
 
 
+//============= Teste do webhook de cotações
+const postwebhook = async (request, response) =>
+{
+    console.log('OK');
+    console.log('Webhook recebido:', req.body);
+    res.status(200).send('Webhook recebido com sucesso!');
+
+}
+module.exports.postwebhook =postwebhook;
+
+
 //============================================================================================
 
 const addPedido = async (request, response) =>
@@ -466,7 +477,7 @@ const getPedidos_Phoenix = async (request, response) =>
        const Get_PedidoJson = JSON.parse( Get_PedidoStr );
        for (let zFor = 0 ; zFor < Get_PedidoJson.rows.length ; zFor++ )
        {
-        console.log('111-'+Get_ProdutoStr);
+//        console.log('111-'+Get_ProdutoStr);
 
         Get_Titulos = await pool.query("Select Sequencial,Valor,Vencimento,FormaDePagto from Pedidos_Titulos Where id = $1 and Tipo = 'P' order by Sequencial",[ Get_PedidoJson.rows[zFor].id ] )
         const Get_TitulosStr  = JSON.stringify( Get_Titulos );

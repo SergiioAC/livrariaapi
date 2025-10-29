@@ -101,7 +101,19 @@ app
 .get(controlePedido.getPedidoPorID)
 .delete(controlePedido.deletePedido)
 
-    
+app
+.route('/webhook_erro')
+.post(controlePedido.postwebhook)
+
+
+
+app.post('/webhook', (req, res) => {
+    // Log dos dados recebidos
+    console.log('Webhook recebido:', req.body);
+  
+    // Retorna uma resposta para confirmar o recebimento
+    res.status(200).send('Webhook recebido com sucesso!');
+  });
 
 
     
